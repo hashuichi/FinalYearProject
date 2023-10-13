@@ -10,7 +10,8 @@
 - Researched technologies to use for the project
 
 ## Week 3 (October 9th)
--
+- Research data fields needed for a hotel pricing dataset
+- Generate fake dataset
 
 ## Week 4 (October 16th)
 -
