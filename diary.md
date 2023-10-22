@@ -14,7 +14,11 @@
 - Generate fake dataset
 
 ## Week 4 (October 16th)
--
+- Create implementation for nearest neighbours
+- Use hyperparameter tuning to find best K
+- Find MSE
+- Predict price of new data
+- Report the results
 
 ## Week 5 (October 23rd)
 -
