@@ -21,7 +21,14 @@
 - Report the results
 
 ## Week 5 (October 23rd)
--
+- Refactored code by creating 3 separate files:
+    - main.py
+    - nearest_neighbours.py
+    - gui.py
+- Created GUI with Streamlit to:
+    - Predict hotel price from user input
+    - Represent MSE of Nearest Neighbours algorithm with different k values on a graph
+    - Display best k and mse values for the training set
 
 ## Week 6 (October 30th)
 -
