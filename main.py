@@ -21,7 +21,7 @@ def knn():
     num_neighbours = list(range(1, 31))
     mse_values = nearest_neighbours.calculate_mse_values(num_neighbours, X_train, X_test, y_train, y_test)
     gui.display_mse_chart(num_neighbours, mse_values)
-    best_k, best_mse = nearest_neighbours.find_best_k(X, y, num_neighbours)
+    best_k, best_mse = nearest_neighbours.find_best_k(X, y)
     gui.display_best_k_and_mse(best_k, best_mse)
 
 if __name__ == '__main__':
