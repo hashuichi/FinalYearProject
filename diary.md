@@ -10,15 +10,15 @@
 - Researched technologies to use for the project
 
 ## Week 3 (October 9th)
-- Research data fields needed for a hotel pricing dataset
-- Generate fake dataset
+- Researched data fields needed for a hotel pricing dataset
+- Generated fake dataset
 
 ## Week 4 (October 16th)
-- Create implementation for nearest neighbours
-- Use hyperparameter tuning to find best K
-- Find MSE
-- Predict price of new data
-- Report the results
+- Created implementation for nearest neighbours
+- Used hyperparameter tuning to find best K
+- Found MSE
+- Predicted price of new data
+- Reported the results
 
 ## Week 5 (October 23rd)
 - Refactored code by creating 3 separate files:
@@ -31,7 +31,9 @@
     - Display best k and mse values for the training set
 
 ## Week 6 (October 30th)
--
+- Generated structured data based on star rating and distances (Replaces old data generated with Faker)
+- Generated graphs to check structure of data with matplotlib
+- Rewrote nearest neighbours to fit the new data
 
 ## Week 7 (November 6th)
 -
