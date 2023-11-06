@@ -16,9 +16,6 @@ plt.grid(True)
 # Set the x-axis to display whole numbers with a step of 500
 plt.xticks(np.arange(0, 5001, step=500))
 
-# Save the plot to an image file (optional)
-plt.savefig('distance_vs_price.png')
-
 # Show the plot
 plt.show()
 
@@ -32,9 +29,6 @@ plt.grid(True)
 
 # Adjust the x-axis to display only whole numbers for star ratings
 plt.xticks(np.arange(1, 6, step=1))
-
-# Save the plot to an image file (optional)
-plt.savefig('star_rating_vs_price.png')
 
 # Show the plot
 plt.show()
