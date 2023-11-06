@@ -33,7 +33,7 @@
 ## Week 6 (October 30th)
 - Generated structured data based on star rating and distances (Replaces old data generated with Faker)
 - Generated graphs to check structure of data with matplotlib
-- Rewrote nearest neighbours to fit the new data
+- Scaled data to fit the correct range
 
 ## Week 7 (November 6th)
 -
