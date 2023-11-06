@@ -10,16 +10,30 @@
 - Researched technologies to use for the project
 
 ## Week 3 (October 9th)
--
+- Researched data fields needed for a hotel pricing dataset
+- Generated fake dataset
 
 ## Week 4 (October 16th)
--
+- Created implementation for nearest neighbours
+- Used hyperparameter tuning to find best K
+- Found MSE
+- Predicted price of new data
+- Reported the results
 
 ## Week 5 (October 23rd)
--
+- Refactored code by creating 3 separate files:
+    - main.py
+    - nearest_neighbours.py
+    - gui.py
+- Created GUI with Streamlit to:
+    - Predict hotel price from user input
+    - Represent MSE of Nearest Neighbours algorithm with different k values on a graph
+    - Display best k and mse values for the training set
 
 ## Week 6 (October 30th)
--
+- Generated structured data based on star rating and distances (Replaces old data generated with Faker)
+- Generated graphs to check structure of data with matplotlib
+- Scaled data to fit the correct range
 
 ## Week 7 (November 6th)
 -
