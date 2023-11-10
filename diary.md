@@ -36,7 +36,9 @@
 - Scaled data to fit the correct range
 
 ## Week 7 (November 6th)
--
+- Rewrote Nearest Neighbours to fit new data
+- Wrote unit tests for testing nearest neighbours
+- Started working on interim report
 
 ## Week 8 (November 13th)
 -
