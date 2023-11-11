@@ -1,9 +1,7 @@
 import streamlit as st
-import nearest_neighbours
+from pages import nearest_neighbours
 
 def display_new_hotel_fields():
-    st.set_page_config(page_title="Financial Agent", layout="centered")
-
     st.subheader('Predict Hotel Price')
     col1, col2, col3 = st.columns([3,1,1])
     new_hotel_name = col1.text_input('Hotel Name', 'Hazel Inn')
