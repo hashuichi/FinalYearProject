@@ -7,7 +7,7 @@ from sklearn.model_selection import GridSearchCV
 import process_data
 
 def main():
-    st.title("Nearest Neighbours Page")
+    st.title("Nearest Neighbours")
     X, y = process_data.get_fake_structured_data()
     X_train, X_test, y_train, y_test = process_data.split_data(X, y)
     knn_model = train_knn_model(X_train, y_train)

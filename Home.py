@@ -11,10 +11,10 @@ def main():
 
     data = pd.read_csv('fake_structured_data.csv')
 
-    col1, col2 = st.columns([1.5, 2])
-    col1.table(renameDataColumns(data))
-    col2.pyplot(display_price_distance_chart(data))
-    col2.pyplot(display_price_star_rating_chart(data))
+    col1, col2 = st.columns([2, 1.5])
+    col1.pyplot(display_price_distance_chart(data))
+    col1.pyplot(display_price_star_rating_chart(data))
+    col2.table(renameDataColumns(data))
 
 def renameDataColumns(data):
     new_column_names = {
