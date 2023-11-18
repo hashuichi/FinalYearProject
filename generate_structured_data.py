@@ -37,10 +37,9 @@ prices = np.round(prices).astype(int)
 
 # Create a DataFrame
 data = {
-    "Hotel Name": hotel_names,
-    "Hotel Star Rating": star_ratings,
-    "Distance to City Center": distances,
-    "Price": prices
+    "star_rating": star_ratings,
+    "distance": distances,
+    "price": prices
 }
 
 df = pd.DataFrame(data)
