@@ -1,101 +1,101 @@
-Hotel Name,Price,Hotel Star Rating,Distance
-Denis Hotel,100,5,152
-Harriet Hotel,269,1,2842
-Alexandra Hotel,109,1,2948
-Ann Hotel,380,3,1576
-Hilary Hotel,143,2,2838
-Ronald Hotel,316,1,2280
-Keith Hotel,332,1,371
-Suzanne Hotel,255,2,1244
-Lawrence Hotel,402,5,4352
-Lucy Hotel,248,4,3405
-James Hotel,51,3,1855
-Rhys Hotel,273,2,3211
-Megan Hotel,112,3,3472
-Stacey Hotel,172,1,2549
-Kathleen Inn,426,2,2225
-Brandon Lodge,462,2,614
-Amy Hotel,70,3,2815
-Guy Resort,126,2,4808
-Clare Lodge,185,3,4804
-Clive Hotel,117,3,109
-Colin Hotel,167,5,3116
-Mitchell Hotel,150,4,1599
-Philip Hotel,230,3,4787
-Mandy Lodge,459,3,550
-Tina Hotel,146,4,3961
-Michael Hotel,388,2,813
-Jennifer Hotel,377,3,1660
-Denise Hotel,194,3,2606
-Elaine Hotel,92,1,4120
-Wendy Hotel,470,3,2810
-Pauline Hotel,209,3,1741
-Amelia Hotel,202,2,590
-Douglas Resort,245,5,723
-Judith Hotel,59,4,614
-Shirley Hotel,251,2,4777
-Jordan Hotel,164,4,4021
-Denise Lodge,405,3,362
-Alan Hotel,406,3,363
-Frederick Resort,250,2,3143
-Andrea Lodge,225,5,3574
-George Hotel,265,1,2953
-Tracey Hotel,232,4,3836
-Marian Inn,147,3,4755
-James Hotel,62,4,1544
-Danielle Lodge,186,4,4662
-Bryan Lodge,292,3,1510
-Emma Hotel,67,1,1491
-Charlotte Inn,285,4,4502
-Gregory Lodge,421,3,3370
-Caroline Hotel,328,2,1927
-Geoffrey Hotel,136,2,3723
-Gordon Hotel,496,1,4424
-Peter Resort,134,2,3278
-Kathryn Hotel,411,5,1464
-Joyce Inn,315,4,2630
-Jay Inn,288,5,3576
-Abigail Hotel,392,3,4006
-Megan Hotel,489,1,4103
-Diane Hotel,376,4,3306
-Gerald Hotel,101,3,2297
-Lynda Hotel,65,1,553
-Lewis Hotel,354,2,3473
-Dawn Hotel,300,2,4600
-Carolyn Resort,227,4,3578
-Amber Inn,154,2,4263
-Carole Resort,333,3,1761
-Stacey Hotel,327,3,683
-Hazel Hotel,420,1,4719
-Gerald Hotel,370,4,2421
-Marc Hotel,140,4,4453
-Katie Hotel,60,2,3371
-Ronald Lodge,375,2,2909
-Anthony Hotel,391,5,1896
-Alice Inn,442,2,1007
-Scott Hotel,342,3,1748
-Toby Hotel,89,3,2709
-Bryan Resort,307,2,3925
-Clare Resort,57,3,3989
-Elliott Hotel,467,1,846
-Clare Resort,433,3,554
-Joanna Hotel,169,4,1105
-Sam Hotel,97,3,1320
-Sandra Hotel,185,3,3757
-Owen Hotel,363,5,4471
-Ruth Inn,280,2,841
-Susan Hotel,284,4,1571
-Henry Hotel,471,4,3310
-David Hotel,469,2,3217
-Glenn Inn,406,4,2845
-Nigel Hotel,249,2,4194
-Antony Hotel,364,3,1129
-Albert Hotel,394,4,3171
-Ellie Hotel,181,3,4475
-Henry Lodge,287,5,3591
-Adam Hotel,377,4,723
-Carole Hotel,53,1,2557
-Heather Hotel,323,1,2614
-Adam Hotel,481,5,2773
-Brian Hotel,118,3,4895
-Joshua Hotel,195,2,3202
+star_rating,distance,price
+5,152,100
+1,2842,269
+1,2948,109
+3,1576,380
+2,2838,143
+1,2280,316
+1,371,332
+2,1244,255
+5,4352,402
+4,3405,248
+3,1855,51
+2,3211,273
+3,3472,112
+1,2549,172
+2,2225,426
+2,614,462
+3,2815,70
+2,4808,126
+3,4804,185
+3,109,117
+5,3116,167
+4,1599,150
+3,4787,230
+3,550,459
+4,3961,146
+2,813,388
+3,1660,377
+3,2606,194
+1,4120,92
+3,2810,470
+3,1741,209
+2,590,202
+5,723,245
+4,614,59
+2,4777,251
+4,4021,164
+3,362,405
+3,363,406
+2,3143,250
+5,3574,225
+1,2953,265
+4,3836,232
+3,4755,147
+4,1544,62
+4,4662,186
+3,1510,292
+1,1491,67
+4,4502,285
+3,3370,421
+2,1927,328
+2,3723,136
+1,4424,496
+2,3278,134
+5,1464,411
+4,2630,315
+5,3576,288
+3,4006,392
+1,4103,489
+4,3306,376
+3,2297,101
+1,553,65
+2,3473,354
+2,4600,300
+4,3578,227
+2,4263,154
+3,1761,333
+3,683,327
+1,4719,420
+4,2421,370
+4,4453,140
+2,3371,60
+2,2909,375
+5,1896,391
+2,1007,442
+3,1748,342
+3,2709,89
+2,3925,307
+3,3989,57
+1,846,467
+3,554,433
+4,1105,169
+3,1320,97
+3,3757,185
+5,4471,363
+2,841,280
+4,1571,284
+4,3310,471
+2,3217,469
+4,2845,406
+2,4194,249
+3,1129,364
+4,3171,394
+3,4475,181
+5,3591,287
+4,723,377
+1,2557,53
+1,2614,323
+5,2773,481
+3,4895,118
+2,3202,195
