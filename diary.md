@@ -42,10 +42,11 @@
 - Added a navbar and created pages to prepare for the development of the other algorithms
 - Added charts to represent the data quality on the homepage
 - Refactored code by moving gui.pu methods to nearest_neighbours.py
-- Created a separate data.py file generalising data file processing in preparation for the development of the rest of the algorithms
 
 ## Week 8 (November 13th)
--
+- Created a separate DataLoader.py file generalising data file processing in preparation for the development of the rest of the algorithms
+- Prepared GUI fully to prepare for the rest of the algorithms
+- Added a radio selection to change the data set
 
 ## Week 9 (November 20th)
 -
