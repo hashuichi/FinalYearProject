@@ -49,7 +49,7 @@
 - Added a radio selection to change the data set
 
 ## Week 9 (November 20th)
--
+- Changed Home, KNN and DataLoader to classes to follow OOP
 
 ## Week 10 (November 27th)
 -
