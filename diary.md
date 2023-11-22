@@ -50,12 +50,15 @@
 
 ## Week 9 (November 20th)
 - Changed Home, KNN and DataLoader to classes to follow OOP
+- Implemented Decision Trees
+- Evaluated performance of Decision Trees
+- Implemented Linear Regression
+- Evaluated performance of Linear Regression
 
 ## Week 10 (November 27th)
--
-
-## Week 11 (December 4th)
--
+- Final touches on the codebase
+- Finished writing interim report
+- Finished making the presentation to prepare for viva
 
 __________________________
 
