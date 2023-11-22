@@ -94,12 +94,18 @@ class NearestNeighbours:
         distance = col3.number_input('Distance', 100, 5000, 100)
         return new_hotel_name, star_rating, distance
 
-    def display_rmse_chart(self, num_neighbours, mse_values):
+    def display_rmse_chart(self, num_neighbours, rmse_values):
         """
         Displays num_neighboours vs rmse_values chart
         """
         st.subheader('Root Mean Squared Error')
-        st.line_chart(dict(zip(num_neighbours, mse_values)))
+        rmse_data = pd.DataFrame(
+            {
+                "Number of Neighbours": num_neighbours,
+                "RMSE Value": rmse_values
+            }
+        )
+        st.line_chart(rmse_data, x="Number of Neighbours", y="RMSE Value")
 
     def display_best_k_and_rmse(self, best_k, best_rmse):
         """
