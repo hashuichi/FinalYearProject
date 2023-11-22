@@ -10,7 +10,8 @@ class Home:
 
     def run(self):
         st.set_page_config(page_title="Data", layout="wide")
-        dl = DataLoader(self.get_data_selection())
+        dl = DataLoader()
+        dl.load_data(self.get_data_selection())
         st.title("Data")
         self.data = dl.get_data()
         col1, col2 = st.columns([2, 1.5])

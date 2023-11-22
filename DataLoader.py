@@ -2,15 +2,29 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 
 class DataLoader:
-    def __init__(self, file_name):
-        self.file_name = file_name
-        self.data = pd.read_csv(file_name)
-
-    def set_data(self, file_name):
-        self.file_name = file_name
+    def set_data(self, data):
+        self.data = data
 
     def get_data(self):
         return self.data
+    
+    def set_file_name(self, file_name):
+        self.file_name = file_name
+
+    def get_file_name(self):
+        return self.file_name
+    
+    def load_data(self, file_name=None, dataframe=None):
+        """
+        Loads the data from either a file or a dataframe.
+
+        """
+        if (file_name is not None):
+            self.data = pd.read_csv(file_name)
+        elif (dataframe is not None):
+            self.data = dataframe
+        else:
+            raise ValueError("Data has not been loaded. Missing file_name or dataframe")
 
     def get_features_labels(self):
         """
