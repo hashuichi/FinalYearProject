@@ -22,11 +22,11 @@ class NearestNeighbours:
         new_price = self.predict_price(star_rating, distance)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
-        num_neighbours = list(range(1, len(self.X_test)))
-        mse_values = self.calculate_mse_values(num_neighbours)
-        self.display_mse_chart(num_neighbours, mse_values)
-        best_k, best_mse = self.find_best_k()
-        self.display_best_k_and_mse(best_k, best_mse)
+        num_neighbours = list(range(1, len(self.y_test)))
+        mse_values = self.calculate_rmse_values(num_neighbours)
+        self.display_rmse_chart(num_neighbours, mse_values)
+        best_k, best_rmse = self.find_best_k()
+        self.display_best_k_and_rmse(best_k, best_rmse)
 
     def train_knn_model(self, n_neighbors=5):
         """
@@ -70,18 +70,18 @@ class NearestNeighbours:
         grid_search.fit(self.X_test, self.y_test)
         best_k = grid_search.best_params_['n_neighbors']
         best_mse = -grid_search.best_score_
-        return best_k, best_mse
+        return best_k, np.sqrt(best_mse)
 
-    def calculate_mse_values(self, num_neighbours):
+    def calculate_rmse_values(self, num_neighbours):
         """
         Calculates mse value for every k in num_neigbours
         """
-        mse_values = []
+        rmse_values = []
         for k in num_neighbours:
             self.train_knn_model(n_neighbors=k)
             y_pred = self.knn_model.predict(self.X_test)
-            mse_values.append(mean_squared_error(self.y_test, y_pred))
-        return mse_values
+            rmse_values.append(np.sqrt(mean_squared_error(self.y_test, y_pred)))
+        return rmse_values
 
     def get_new_hotel_fields(self):
         """
@@ -94,19 +94,19 @@ class NearestNeighbours:
         distance = col3.number_input('Distance', 100, 5000, 100)
         return new_hotel_name, star_rating, distance
 
-    def display_mse_chart(self, num_neighbours, mse_values):
+    def display_rmse_chart(self, num_neighbours, mse_values):
         """
-        Displays num_neighboours vs mse_values chart
+        Displays num_neighboours vs rmse_values chart
         """
-        st.subheader('Mean Squared Error for n_neighbors 1 to 25')
+        st.subheader('Root Mean Squared Error')
         st.line_chart(dict(zip(num_neighbours, mse_values)))
 
-    def display_best_k_and_mse(self, best_k, best_mse):
+    def display_best_k_and_rmse(self, best_k, best_rmse):
         """
         Displays the best k and the corresponding MSE value
         """
         st.write(f'Best k: {best_k}')
-        st.write(f'Best Mean Squared Error: {best_mse:.2f}')
+        st.write(f'Best RMSE: {best_rmse:.2f}')
 
 
 if __name__ == '__main__':
