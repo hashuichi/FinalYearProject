@@ -18,6 +18,9 @@ class DataLoader:
         """
         Loads the data from either a file or a dataframe.
 
+        Parameters:
+        file_name (string): File to import data from.
+        dataframe (pd.DataFrame): Dataframe to set the objects data.
         """
         if (file_name is not None):
             self.data = pd.read_csv(file_name)
