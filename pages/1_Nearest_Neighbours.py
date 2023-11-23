@@ -1,9 +1,5 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import GridSearchCV
 from Home import DataPage
 from data_loader import DataLoader
 from nearest_neighbours import NearestNeighbours
@@ -29,7 +25,7 @@ class NearestNeighboursPage:
 
     def get_new_hotel_fields(self):
         """
-        Calculates mse value for every k in num_neigbours
+        Creates inputs for hotel data and returns the values
         """
         st.subheader('Predict Hotel Price')
         col1, col2, col3 = st.columns([3, 1, 1])
@@ -53,7 +49,7 @@ class NearestNeighboursPage:
 
     def display_best_k_and_rmse(self, best_k, best_rmse):
         """
-        Displays the best k and the corresponding MSE value
+        Displays the best k and the corresponding RMSE value
         """
         st.write(f'Best k: {best_k}')
         st.write(f'Best RMSE: {best_rmse:.2f}')

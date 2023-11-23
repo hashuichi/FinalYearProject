@@ -1,4 +1,3 @@
-import streamlit as st
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KNeighborsRegressor
@@ -18,8 +17,6 @@ class NearestNeighbours:
         Train a KNN model on the given features and labels.
 
         Parameters:
-        X_train (pd.DataFrame): Training features
-        y_train (pd.Series): Training labels
         n_neighbours (int): Number of neighbours (default: 5)
 
         Returns:
@@ -62,7 +59,7 @@ class NearestNeighbours:
             for k in n_neighbours:
                 self.train_model(n_neighbours=k)
                 y_pred = self.knn_model.predict(self.X_test)
-                rmse_values.append(np.sqrt(mean_squared_error(self.y_test, y_pred)))
+                rmse_values.append(mean_squared_error(self.y_test, y_pred, squared=False))
             return rmse_values
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
