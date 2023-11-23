@@ -1,6 +1,6 @@
 import streamlit as st
 
-class NeuralNetworks:
+class NeuralNetworksPage:
     def __init__(self):
         st.set_page_config(page_title="Neural Networks", layout="wide")
 
@@ -9,5 +9,5 @@ class NeuralNetworks:
         st.write("Neural Networks implementation will be displayed here...")
 
 if __name__ == '__main__':
-    app = NeuralNetworks()
+    app = NeuralNetworksPage()
     app.run()

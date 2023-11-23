@@ -1,6 +1,6 @@
 import streamlit as st
 
-class DecisionTree:
+class DecisionTreePage:
     def __init__(self):
         st.set_page_config(page_title="Decision Tree", layout="wide")
 
@@ -9,5 +9,5 @@ class DecisionTree:
         st.write("Decision Tree implementation will be displayed here...")
 
 if __name__ == '__main__':
-    app = DecisionTree()
+    app = DecisionTreePage()
     app.run()

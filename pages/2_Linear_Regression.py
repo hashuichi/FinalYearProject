@@ -1,6 +1,6 @@
 import streamlit as st
 
-class LinearRegression:
+class LinearRegressionPage:
     def __init__(self):
         st.set_page_config(page_title="Linear Regression", layout="wide")
 
@@ -9,5 +9,5 @@ class LinearRegression:
         st.write("Linear Regression implementation will be displayed here...")
 
 if __name__ == '__main__':
-    app = LinearRegression()
+    app = LinearRegressionPage()
     app.run()

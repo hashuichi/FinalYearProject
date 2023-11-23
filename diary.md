@@ -56,7 +56,9 @@
 - Evaluated performance of Linear Regression
 
 ## Week 10 (November 27th)
-- Final touches on the codebase
+- Final touches on the codebase:
+    - Modified testknn.py to fit new oop changes of knn
+    - Split algorithms and pages for dedicated algorithms into separate files
 - Finished writing interim report
 - Finished making the presentation to prepare for viva
 

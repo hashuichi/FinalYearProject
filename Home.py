@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from DataLoader import DataLoader
+from data_loader import DataLoader
 
-class Home:
+class DataPage:
     def __init__(self):
         self.data = None
 
@@ -63,5 +63,5 @@ class Home:
             return plt.figure()
 
 if __name__ == '__main__':
-    app = Home()
+    app = DataPage()
     app.run()
