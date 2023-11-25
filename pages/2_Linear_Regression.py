@@ -27,7 +27,7 @@ class LinearRegressionPage:
         st.write(f'**RMSE:** {rmse:.2f}')
 
         col1, col2 = st.columns(2)
-        col1.pyplot(self.plot_regression_line())
+        col1.pyplot(self.plot_predicted_prices())
         col2.pyplot(self.plot_scatter_graph())
         
     
@@ -46,26 +46,25 @@ class LinearRegressionPage:
         """
         Displays and plots the scatter graph of price vs distance
         """
-        star_rating = self.X_test.iloc[:, 0]
-        distance = self.X_test.iloc[:, 1]
-
         fig, ax = plt.subplots()
-        scatter = ax.scatter(distance, self.y_test, c=star_rating, cmap='viridis', marker='o')
+        scatter = ax.scatter(self.X_test['distance'], self.y_test, c=self.X_test['star_rating'], cmap='viridis', marker='o')
+        # ax.scatter(self.X_test['distance'], self.y_pred, color='red')
         ax.set_xlabel('Distance')
         ax.set_ylabel('Price')
         ax.legend(*scatter.legend_elements(), title='Star Rating')
 
         return fig
     
-    def plot_regression_line(self):
+    def plot_predicted_prices(self):
         """
-        Displays and plots the regression line
+        Displays and plots the predicted prices compared to the true prices
         """
         fig, ax = plt.subplots()
-        ax.scatter(self.y_test, self.y_pred, color='red', label='Regression Line')
-        
-        ax.set_xlabel('True Prices')
-        ax.set_ylabel('Predicted Prices')
+        ax.scatter(self.X_test['distance'], self.y_test, c='blue', label='True Prices')
+        ax.scatter(self.X_test['distance'], self.y_pred, color='red', label='Predicted Prices')
+        ax.legend()
+        ax.set_xlabel('Distance')
+        ax.set_ylabel('Price')
         return fig
 
 if __name__ == '__main__':
