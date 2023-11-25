@@ -61,7 +61,7 @@ class LinearRegression:
         rmse_value (int): The RMSE value of the dataset.
         """
         if self.model is not None:
-            rmse = mean_squared_error(self.y_test, self.y_pred, squared=False)
+            rmse = mean_squared_error(self.y_test, self.calculate_y_pred(), squared=False)
             return rmse
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")

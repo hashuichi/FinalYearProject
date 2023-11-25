@@ -1,5 +1,4 @@
 import streamlit as st
-import numpy as np
 from Home import DataPage
 from data_loader import DataLoader
 from linear_regression import LinearRegression
