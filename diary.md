@@ -50,10 +50,11 @@
 
 ## Week 9 (November 20th)
 - Changed Home, KNN and DataLoader to classes to follow OOP
-- Implemented Decision Trees
-- Evaluated performance of Decision Trees
+- Implemented test class for Linear Regression
 - Implemented Linear Regression
 - Evaluated performance of Linear Regression
+- Implemented a super class BaseModel to instantiate common parameters and methods for the alogrithms
+
 
 ## Week 10 (November 27th)
 - Final touches on the codebase:

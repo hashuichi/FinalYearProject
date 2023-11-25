@@ -3,14 +3,11 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
+from base_model import BaseModel
 
-class NearestNeighbours:
+class NearestNeighbours(BaseModel):
     def __init__(self, X_train, X_test, y_train, y_test):
-        self.X_train = X_train
-        self.X_test = X_test
-        self.y_train = y_train
-        self.y_test = y_test
-        self.knn_model = None
+        super().__init__(X_train, X_test, y_train, y_test)
 
     def train_model(self, n_neighbours=5):
         """
@@ -22,27 +19,9 @@ class NearestNeighbours:
         Returns:
         knn_model (KNeighborsRegressor): The trained KNN regression model.
         """
-        self.knn_model = KNeighborsRegressor(n_neighbors=n_neighbours)
-        self.knn_model.fit(self.X_train, self.y_train)
-        return self.knn_model
-
-    def predict_price(self, star_rating, distance):
-        """
-        Predict the price using a trained KNN regression model.
-
-        Parameters:
-        star_rating (float): Star rating of the new data point.
-        distance (float): Distance to the city center of the new data point.
-
-        Returns:
-        predicted_price (float): Predicted price for the new data point.
-        """
-        if self.knn_model is not None:
-            new_data = pd.DataFrame({"star_rating": [star_rating], "distance": [distance]})
-            predicted_price = self.knn_model.predict(new_data)
-            return predicted_price
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
+        self.model = KNeighborsRegressor(n_neighbors=n_neighbours)
+        self.model.fit(self.X_train, self.y_train)
+        return self.model
 
     def calculate_rmse_values(self, n_neighbours):
         """
@@ -54,11 +33,11 @@ class NearestNeighbours:
         Returns:
         rmse_values (array): The rmse values of the dataset for every k.
         """
-        if self.knn_model is not None:
+        if self.model is not None:
             rmse_values = []
             for k in n_neighbours:
                 self.train_model(n_neighbours=k)
-                y_pred = self.knn_model.predict(self.X_test)
+                y_pred = self.model.predict(self.X_test)
                 rmse_values.append(mean_squared_error(self.y_test, y_pred, squared=False))
             return rmse_values
         else:

@@ -21,9 +21,10 @@ class LinearRegressionPage:
         new_price = self.lr.predict_price(star_rating, distance)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
+        st.subheader('Results')
         self.y_pred = self.lr.calculate_y_pred()
         rmse = self.lr.calculate_rmse_value()
-        st.write(f'RMSE: {rmse:.2f}')
+        st.write(f'**RMSE:** {rmse:.2f}')
 
         col1, col2 = st.columns(2)
         col1.pyplot(self.plot_regression_line())
