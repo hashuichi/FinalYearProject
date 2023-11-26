@@ -50,6 +50,8 @@
 
 ## Week 9 (November 20th)
 - Changed Home, KNN and DataLoader to classes to follow OOP
+- Modified testknn.py to fit new oop changes of knn
+- Split algorithms and pages for dedicated algorithms into separate files
 - Implemented test class for Linear Regression
 - Implemented Linear Regression
 - Evaluated performance of Linear Regression
@@ -57,9 +59,9 @@
 
 
 ## Week 10 (November 27th)
-- Final touches on the codebase:
-    - Modified testknn.py to fit new oop changes of knn
-    - Split algorithms and pages for dedicated algorithms into separate files
+- Implemented test class for Decision Tree
+- Implemented Decision Tree
+- Evaluated performance of Decision Tree
 - Finished writing interim report
 - Finished making the presentation to prepare for viva
 
