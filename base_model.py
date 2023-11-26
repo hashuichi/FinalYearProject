@@ -68,8 +68,6 @@ class BaseModel:
             self.calculate_y_pred()
         col1.pyplot(self.plot_residual_plot())
         col2.pyplot(self.plot_predicted_actual())
-        # col1.pyplot(self.plot_learning_curve())
-        # col2.pyplot(self.plot_residuals_distribution())
         
     def plot_predicted_actual(self):
         """
