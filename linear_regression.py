@@ -6,7 +6,6 @@ from base_model import BaseModel
 class LinearRegression(BaseModel):
     def __init__(self, X_train, X_test, y_train, y_test):
         super().__init__(X_train, X_test, y_train, y_test)
-        self.y_pred = None
 
     def train_model(self):
         """
@@ -18,19 +17,6 @@ class LinearRegression(BaseModel):
         self.model = linear_model.LinearRegression()
         self.model.fit(self.X_train, self.y_train)
         return self.model
-        
-    def calculate_y_pred(self):
-        """
-        Calculates the predicted array of labels from the test set.
-
-        Returns:
-        y_pred (array): The predicted labels
-        """
-        if self.model is not None:
-            self.y_pred = self.model.predict(self.X_test)
-            return self.y_pred
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
 
     def calculate_rmse_value(self):
         """
