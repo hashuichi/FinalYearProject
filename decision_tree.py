@@ -1,9 +1,9 @@
 import pandas as pd
-from sklearn import linear_model
+from sklearn import tree
 from sklearn.metrics import mean_squared_error
 from base_model import BaseModel
 
-class LinearRegression(BaseModel):
+class DecisionTree(BaseModel):
     def train_model(self):
         """
         Train a Linear Regression model on the given features and labels.
@@ -11,7 +11,7 @@ class LinearRegression(BaseModel):
         Returns:
         model (LinearRegression): The trained linear regression model.
         """
-        self.model = linear_model.LinearRegression()
+        self.model = tree.DecisionTreeRegressor(random_state=500)
         self.model.fit(self.X_train, self.y_train)
         return self.model
 

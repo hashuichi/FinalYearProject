@@ -6,9 +6,6 @@ from sklearn.model_selection import GridSearchCV
 from base_model import BaseModel
 
 class NearestNeighbours(BaseModel):
-    def __init__(self, X_train, X_test, y_train, y_test):
-        super().__init__(X_train, X_test, y_train, y_test)
-
     def train_model(self, n_neighbours=5):
         """
         Train a KNN model on the given features and labels.
