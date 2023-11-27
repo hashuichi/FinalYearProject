@@ -29,7 +29,7 @@ class NearestNeighboursPage:
         """
         Displays num_neighboours vs rmse_values chart
         """
-        st.subheader('Root Mean Squared Error')
+        st.subheader('Results')
         rmse_data = pd.DataFrame(
             {
                 "Number of Neighbours": num_neighbours,

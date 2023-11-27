@@ -4,9 +4,6 @@ from data_loader import DataLoader
 from linear_regression import LinearRegression
 
 class LinearRegressionPage:
-    def __init__(self):
-        self.lr = None
-
     def run(self):
         st.title("Linear Regression")
         dl = DataLoader()
