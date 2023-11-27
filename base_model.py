@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
+from sklearn.metrics import mean_squared_error
 import streamlit as st
 
 class BaseModel:
@@ -55,6 +56,21 @@ class BaseModel:
         if self.model is not None:
             self.y_pred = self.model.predict(self.X_test)
             return self.y_pred
+        else:
+            raise ValueError("Model has not been trained. Call train_model() first.")
+        
+    def calculate_rmse_value(self):
+        """
+        Calculates rmse using the predicted labels for the test set
+
+        Returns:
+        rmse_value (int): The RMSE value of the dataset.
+        """
+        if self.y_pred is None:
+            self.calculate_y_pred()
+        if self.model is not None:
+            rmse = mean_squared_error(self.y_test, self.calculate_y_pred(), squared=False)
+            return rmse
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
