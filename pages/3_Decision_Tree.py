@@ -12,16 +12,17 @@ class DecisionTreePage:
         tree = DecisionTree(self.X_train, self.X_test, self.y_train, self.y_test)
         tree.train_model()
 
-        star_rating, distance = tree.get_new_hotel_fields()
+        st.subheader('Predict Hotel Price')
+        star_rating, distance = tree.get_new_hotel_fields(st)
         new_price = tree.predict_price(star_rating, distance)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
         st.subheader('Results')
-        tree.calculate_y_pred()
         rmse = tree.calculate_rmse_value()
         st.write(f'**RMSE:** {rmse:.2f}')
 
-        tree.generate_plots()
+        st.subheader('Performance Graphs')
+        tree.generate_plots(st)
 
 if __name__ == '__main__':
     app = DecisionTreePage()

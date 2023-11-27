@@ -12,8 +12,9 @@ class NearestNeighboursPage:
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         knn = NearestNeighbours(self.X_train, self.X_test, self.y_train, self.y_test)
         knn.train_model()
-    
-        star_rating, distance = knn.get_new_hotel_fields()
+
+        st.subheader('Predict Hotel Price')
+        star_rating, distance = knn.get_new_hotel_fields(st)
         new_price = knn.predict_price(star_rating, distance)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
@@ -23,7 +24,8 @@ class NearestNeighboursPage:
         best_k, best_rmse = knn.find_best_k()
         self.display_best_k_and_rmse(best_k, best_rmse)
 
-        knn.generate_plots()
+        st.subheader('Performance Graphs')
+        knn.generate_plots(st)
 
     def display_rmse_chart(self, num_neighbours, rmse_values):
         """

@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import mean_squared_error
-import streamlit as st
 
 class BaseModel:
     def __init__(self, X_train, X_test, y_train, y_test):
@@ -17,11 +16,10 @@ class BaseModel:
     def train_model(self):
         raise NotImplementedError("train_model method must be implemented in the subclass.")
     
-    def get_new_hotel_fields(self):
+    def get_new_hotel_fields(self, st):
         """
         Creates inputs for hotel data and returns the values
         """
-        st.subheader('Predict Hotel Price')
         col1, col2, col3 = st.columns([3, 1, 1])
         col1.text_input('Hotel Name', 'Hazel Inn')
         star_rating = col2.number_input('Star Rating', 1, 5, 2)
@@ -74,11 +72,10 @@ class BaseModel:
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
-    def generate_plots(self):
+    def generate_plots(self, st):
         '''
         Displays the different plots to visualise the performance of the model.
         '''
-        st.subheader("Performance Graphs")
         col1, col2 = st.columns(2)
         if self.y_pred is None:
             self.calculate_y_pred()
