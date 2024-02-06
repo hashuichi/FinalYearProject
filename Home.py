@@ -10,21 +10,22 @@ class DataPage:
 
     def run(self):
         st.set_page_config(page_title="Data", layout="wide")
-        dl = DataLoader()
-        dl.load_data(self.get_data_selection())
+        self.load_data()
         st.title("Data")
-        self.data = dl.get_data()
         col1, col2 = st.columns([2, 1.5])
         col1.pyplot(self.display_price_distance_chart())
         col1.pyplot(self.display_price_star_rating_chart())
         col2.table(self.rename_data_columns())
 
+    def load_data(self):
+        data_option = self.get_data_selection()
+        if st.session_state.selected_df == data_option:
+            dl = DataLoader()
+            dl.load_data(data_option)
+            self.data = dl.get_data()
+
     def get_data_selection(self):
-        data_option = st.selectbox("**Select Dataset**", ["Structured Dataset", "Unstructured Dataset"])
-        if data_option == 'Structured Dataset':
-            return 'datasets/fake_structured_data.csv'
-        elif data_option == 'Unstructured Dataset':
-            return 'datasets/fake_data.csv'
+        return st.selectbox("**Select Dataset**", ["Benchmark Dataset", "Structured Dataset", "Unstructured Dataset"], key='selected_df')
 
     def rename_data_columns(self):
         if self.data is not None:

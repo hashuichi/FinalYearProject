@@ -7,21 +7,24 @@ class DataLoader:
 
     def get_data(self):
         return self.data
-    
-    def set_file_name(self, file_name):
-        self.file_name = file_name
 
-    def get_file_name(self):
-        return self.file_name
+    def get_file_name(self, data_option):
+        if data_option == 'Benchmark Dataset':
+            return 'datasets/airbnb_london.csv'
+        elif data_option == 'Structured Dataset':
+            return 'datasets/fake_structured_data.csv'
+        elif data_option == 'Unstructured Dataset':
+            return 'datasets/fake_data.csv'
     
-    def load_data(self, file_name=None, dataframe=None):
+    def load_data(self, data_option=None, dataframe=None):
         """
-        Loads the data from either a file or a dataframe.
+        Loads the data from either a data option or a dataframe.
 
         Parameters:
-        file_name (string): File to import data from.
+        data_option (string): File to import data from.
         dataframe (pd.DataFrame): Dataframe to set the objects data.
         """
+        file_name = self.get_file_name(data_option)
         if (file_name is not None):
             self.data = pd.read_csv(file_name)
         elif (dataframe is not None):

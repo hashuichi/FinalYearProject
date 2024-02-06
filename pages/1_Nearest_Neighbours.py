@@ -8,7 +8,8 @@ class NearestNeighboursPage:
     def run(self):
         st.title("Nearest Neighbours")
         dl = DataLoader()
-        dl.load_data(DataPage().get_data_selection())
+        # dl.load_data(DataPage().get_data_selection())
+        dl.load_data(st.session_state.selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         knn = NearestNeighbours(self.X_train, self.X_test, self.y_train, self.y_test)
         knn.train_model()
@@ -17,6 +18,9 @@ class NearestNeighboursPage:
         star_rating, distance = knn.get_new_hotel_fields(st)
         new_price = knn.predict_price(star_rating, distance)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
+        # knn.train_model2()
+        # new_price2 = knn.predict_new_entry([star_rating, distance])
+        # st.write(f'Predicted Price Per Night: £{new_price2:.2f}')
 
         num_neighbours = list(range(1, len(self.y_test)))
         rmse_values = knn.calculate_rmse_values(num_neighbours)

@@ -5,6 +5,27 @@ from sklearn.model_selection import GridSearchCV
 from base_model import BaseModel
 
 class NearestNeighbours(BaseModel):
+    def _find_nearest_neighbors(self, new_entry):
+        distances = np.sqrt(np.sum((self.X_train - new_entry)**2, axis=1))
+        nearest_indices = np.argsort(distances)[:self.n_neighbours]
+        nearest_y = self.y_train[nearest_indices]
+        return nearest_y
+    
+    def train_model2(self, n_neighbours=5):
+        self.n_neighbours = n_neighbours
+
+    def predict_new_entry(self, new_entry):
+        nearest_y = self._find_nearest_neighbors(new_entry)
+        predicted_price = np.mean(nearest_y)
+        return predicted_price
+
+    def y_pred(self):
+        y_pred = []
+        for i in range(len(self.X_test)):
+            predicted_price = self.predict_new_entry(self.X_test[i])
+            y_pred.append(predicted_price)
+        return self.y_pred
+    
     def train_model(self, n_neighbours=5):
         """
         Train a KNN model on the given features and labels.

@@ -7,7 +7,7 @@ class LinearRegressionPage:
     def run(self):
         st.title("Linear Regression")
         dl = DataLoader()
-        dl.load_data(DataPage().get_data_selection())
+        dl.load_data(DataPage().load_data())
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         lr = LinearRegression(self.X_train, self.X_test, self.y_train, self.y_test)
         lr.train_model()
