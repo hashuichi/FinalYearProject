@@ -23,6 +23,7 @@ class DataPage:
             dl = DataLoader()
             dl.load_data(data_option)
             self.data = dl.get_data()
+            st.session_state.df = self.data
 
     def get_data_selection(self):
         return st.selectbox("**Select Dataset**", ["Benchmark Dataset", "Structured Dataset", "Unstructured Dataset"], key='selected_df')

@@ -5,7 +5,8 @@ from sklearn.model_selection import learning_curve
 from sklearn.metrics import mean_squared_error
 
 class BaseModel:
-    def __init__(self, X_train, X_test, y_train, y_test):
+    def __init__(self, selected_df, X_train, X_test, y_train, y_test):
+        self.selected_df = selected_df
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
@@ -20,11 +21,19 @@ class BaseModel:
         """
         Creates inputs for hotel data and returns the values
         """
-        col1, col2, col3 = st.columns([3, 1, 1])
-        col1.text_input('Hotel Name', 'Hazel Inn')
-        star_rating = col2.number_input('Star Rating', 1, 5, 2)
-        distance = col3.number_input('Distance', 100, 5000, 100)
-        return star_rating, distance
+        if self.selected_df == "Benchmark Dataset":
+            col1, col2, col3, col4 = st.columns(4)
+            room_type = col1.selectbox('Room Type', self.X_train['room_type'].unique())
+            occupancy = col2.number_input('Number of Occupants', 1, 16, 2)
+            bathrooms = col3.selectbox('Number of Bathrooms', sorted(self.X_train['bathrooms'].unique()))
+            beds = col4.number_input('Number of Beds', 1, 50, 1)
+            return [room_type, occupancy, bathrooms, beds]
+        else:
+            col1, col2, col3 = st.columns([3, 1, 1])
+            col1.text_input('Hotel Name', 'Hazel Inn')
+            star_rating = col2.number_input('Star Rating', 1, 5, 2)
+            distance = col3.number_input('Distance', 100, 5000, 100)
+            return [star_rating, distance]
 
     def predict_price(self, star_rating, distance):
         """
