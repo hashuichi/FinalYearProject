@@ -42,8 +42,8 @@ class DataLoader:
         """
         data = self.data.copy()
         if self.data is not None:
-            X = data.drop('price', axis=1)
-            y = data['price']
+            X = data.iloc[:, :-1]
+            y = data.iloc[:, -1]
             return X, y
         else:
             raise ValueError("Data has not been loaded. Call load_data() first.")

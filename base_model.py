@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import mean_squared_error
+import streamlit as st
 
 class BaseModel:
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):
@@ -13,6 +14,12 @@ class BaseModel:
         self.y_test = y_test
         self.model = None
         self.y_pred = None
+        self.room_type_map = {
+            'Private room': 1,
+            'Entire home/apt': 2,
+            'Shared room': 3,
+            'Hotel room': 4
+        }
 
     def train_model(self):
         raise NotImplementedError("train_model method must be implemented in the subclass.")
@@ -23,11 +30,11 @@ class BaseModel:
         """
         if self.selected_df == "Benchmark Dataset":
             col1, col2, col3, col4 = st.columns(4)
-            room_type = col1.selectbox('Room Type', self.X_train['room_type'].unique())
+            room_type = col1.selectbox('Room Type', self.room_type_map.keys())
             occupancy = col2.number_input('Number of Occupants', 1, 16, 2)
             bathrooms = col3.selectbox('Number of Bathrooms', sorted(self.X_train['bathrooms'].unique()))
             beds = col4.number_input('Number of Beds', 1, 50, 1)
-            return [room_type, occupancy, bathrooms, beds]
+            return [self.room_type_map[room_type], occupancy, bathrooms, beds]
         else:
             col1, col2, col3 = st.columns([3, 1, 1])
             col1.text_input('Hotel Name', 'Hazel Inn')
@@ -35,19 +42,26 @@ class BaseModel:
             distance = col3.number_input('Distance', 100, 5000, 100)
             return [star_rating, distance]
 
-    def predict_price(self, star_rating, distance):
+    def predict_price(self, new_entry):
         """
         Predict the price using a trained model.
 
         Parameters:
-        star_rating (float): Star rating of the new data point.
-        distance (float): Distance to the city center of the new data point.
+        new_entry (array): Array containing values of new features.
 
         Returns:
         predicted_price (float): Predicted price for the new data point.
         """
         if self.model is not None:
-            new_data = pd.DataFrame({"star_rating": [star_rating], "distance": [distance]})
+            st.write(new_entry)
+            if self.selected_df == "Benchmark Dataset":
+                new_data = pd.DataFrame({
+                    "room_type": new_entry[0], 
+                    "accommodates": new_entry[1], 
+                    "bathrooms": new_entry[2], 
+                    "beds": new_entry[3]}, index=[0])
+            else:    
+                new_data = pd.DataFrame({"star_rating": new_entry[0], "distance": new_entry[1]}, index=[0])
             predicted_price = self.model.predict(new_data)
             return predicted_price
         else:
