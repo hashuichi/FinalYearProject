@@ -15,14 +15,10 @@ class NearestNeighboursPage:
         st.subheader('Optimise Hotel Price')
         knn = NearestNeighbours(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
         new_entry = knn.get_new_hotel_fields(st)
-        # self.X_test.reset_index(drop=True, inplace=True)
-        # st.write(self.X_test.iloc[0])
-        # st.write(new_entry)
-
         new_price = knn.predict_new_entry(new_entry)
         st.write(f'Best Selling Price Per Night Scratch: £{new_price:.2f}')
 
-        n_values = list(range(2, 5))
+        n_values = list(range(2, 20))
         rmse_values = knn.calculate_rmse(n_values, st)
         self.display_rmse_chart(rmse_values)
         best_k, best_rmse = knn.find_best_k()
