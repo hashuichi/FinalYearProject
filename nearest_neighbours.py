@@ -8,7 +8,7 @@ class NearestNeighbours(BaseModel):
     def _find_nearest_neighbors(self, new_entry):
         distances = np.sqrt(np.sum((self.X_train - new_entry)**2, axis=1))
         nearest_indices = np.argsort(distances)[:self.n_neighbours]
-        nearest_y = self.y_train[nearest_indices]
+        nearest_y = self.y_train.iloc[nearest_indices]
         return nearest_y
     
     def train_model2(self, n_neighbours=5):

@@ -8,30 +8,31 @@ class NearestNeighboursPage:
     def run(self):
         st.title("Nearest Neighbours")
         dl = DataLoader()
-        # dl.load_data(DataPage().get_data_selection())
-        ## TODO: Stop loading data in here and use session state from Data.py
         selected_df = DataPage().get_data_selection()
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         knn = NearestNeighbours(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
-        # knn.train_model()
+        knn.train_model()
 
-        st.subheader('Predict Hotel Price')
+        st.subheader('Optimise Hotel Price')
         new_entry = knn.get_new_hotel_fields(st)
-        # new_price = knn.predict_price(star_rating, distance)
-        # st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
-        # knn.train_model2()
-        # new_price2 = knn.predict_new_entry(new_entry)
-        # st.write(f'Predicted Price Per Night: £{new_price2:.2f}')
+        # st.write(new_entry)
+        # st.write("Shape of self.X_train:", self.X_train)
+        # st.write("Shape of self.y_train:", self.y_train)
+        new_price = knn.predict_price(new_entry)
+        st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
+        knn.train_model2()
+        new_price2 = knn.predict_new_entry(new_entry)
+        st.write(f'Predicted Price Per Night Scratch: £{new_price2:.2f}')
 
-        # num_neighbours = list(range(1, len(self.y_test)))
-        # rmse_values = knn.calculate_rmse_values(num_neighbours)
-        # self.display_rmse_chart(num_neighbours, rmse_values)
-        # best_k, best_rmse = knn.find_best_k()
-        # self.display_best_k_and_rmse(best_k, best_rmse)
+        num_neighbours = list(range(1, len(self.y_test)))
+        rmse_values = knn.calculate_rmse_values(num_neighbours)
+        self.display_rmse_chart(num_neighbours, rmse_values)
+        best_k, best_rmse = knn.find_best_k()
+        self.display_best_k_and_rmse(best_k, best_rmse)
 
-        # st.subheader('Performance Graphs')
-        # knn.generate_plots(st)
+        st.subheader('Performance Graphs')
+        knn.generate_plots(st)
 
     def display_rmse_chart(self, num_neighbours, rmse_values):
         """

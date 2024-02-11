@@ -53,7 +53,6 @@ class BaseModel:
         predicted_price (float): Predicted price for the new data point.
         """
         if self.model is not None:
-            st.write(new_entry)
             if self.selected_df == "Benchmark Dataset":
                 new_data = pd.DataFrame({
                     "room_type": new_entry[0], 
