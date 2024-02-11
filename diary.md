@@ -70,16 +70,27 @@ __________________________
 # Term 2
 
 ## Week 1 (January 15th)
--
+- Found a few possible benchmark datasets on kaggle
+- Selected the best dataset (London Airbnb Listings)
 
 ## Week 2 (January 22nd)
--
+- Started preprocessing the chosen dataset.
+- Cleaned dataset by removing 20000 rows of redundant data
+- Incorporated the new dataset as an option in the select box
+- Started implementing session states from Streamlit to differentiate between the old datasets and the new benchmark dataset.
 
 ## Week 3 (January 29th)
--
+- Added new input boxes for the new features of the dataset
+- Started rewriting knn from scratch.
+- Encountered errors due to the room type being a string so had to map the room type values to integers
 
 ## Week 4 (February 5th)
--
+- Finished rewriting knn
+- Refactored code to ensure program still works for both old and new datasets
+- Created a variation of the Data page for the benchmark dataset which includes:
+    - Table of the data
+    - A key for room type to int mapping
+    - Plots to visualise the data frequency and quality
 
 ## Week 5 (February 12th)
 -
