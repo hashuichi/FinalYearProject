@@ -32,7 +32,7 @@ class BaseModel:
             col1, col2, col3, col4 = st.columns(4)
             room_type = col1.selectbox('Room Type', self.room_type_map.keys())
             occupancy = col2.number_input('Number of Occupants', 1, 16, 2)
-            bathrooms = col3.selectbox('Number of Bathrooms', sorted(self.X_train['bathrooms'].unique()))
+            bathrooms = col3.selectbox('Number of Bathrooms', sorted(self.X_train['bathrooms'].unique()), 1)
             beds = col4.number_input('Number of Beds', 1, 50, 1)
             return [self.room_type_map[room_type], occupancy, bathrooms, beds]
         else:
@@ -66,18 +66,8 @@ class BaseModel:
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
-    def calculate_y_pred(self):
-        """
-        Calculates the predicted array of labels from the test set.
-
-        Returns:
-        y_pred (array): The predicted labels
-        """
-        if self.model is not None:
-            self.y_pred = self.model.predict(self.X_test)
-            return self.y_pred
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
+    def get_y_pred(self):
+        raise NotImplementedError("get_y_pred method must be implemented in the subclass.")
         
     def calculate_rmse_value(self):
         """

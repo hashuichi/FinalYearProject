@@ -10,23 +10,8 @@ class NearestNeighbours(BaseModel):
         nearest_indices = np.argsort(distances)[:self.n_neighbours]
         nearest_y = self.y_train.iloc[nearest_indices]
         return nearest_y
-    
-    def train_model2(self, n_neighbours=5):
-        self.n_neighbours = n_neighbours
 
-    def predict_new_entry(self, new_entry):
-        nearest_y = self._find_nearest_neighbors(new_entry)
-        predicted_price = np.mean(nearest_y)
-        return predicted_price
-
-    def y_pred(self):
-        y_pred = []
-        for i in range(len(self.X_test)):
-            predicted_price = self.predict_new_entry(self.X_test[i])
-            y_pred.append(predicted_price)
-        return self.y_pred
-    
-    def train_model(self, n_neighbours=5):
+    def predict_new_entry(self, new_entry, n_neighbours=5):
         """
         Train a KNN model on the given features and labels.
 
@@ -36,29 +21,42 @@ class NearestNeighbours(BaseModel):
         Returns:
         knn_model (KNeighborsRegressor): The trained KNN regression model.
         """
-        self.model = KNeighborsRegressor(n_neighbors=n_neighbours)
-        self.model.fit(self.X_train, self.y_train)
-        return self.model
+        self.n_neighbours = n_neighbours
+        nearest_y = self._find_nearest_neighbors(new_entry)
+        predicted_price = np.mean(nearest_y)
+        return predicted_price
 
-    def calculate_rmse_values(self, n_neighbours):
+    def get_y_pred(self, n_neighbours=5):
         """
-        Calculates rmse value for every k in num_neigbours
-
-        Parameters:
-        n_neighbours (list(int)): List of integers for the number of neighbours
+        Calculates the predicted array of labels from the test set.
 
         Returns:
-        rmse_values (array): The rmse values of the dataset for every k.
+        y_pred (array): The predicted labels
         """
-        if self.model is not None:
-            rmse_values = []
-            for k in n_neighbours:
-                self.train_model(n_neighbours=k)
-                y_pred = self.model.predict(self.X_test)
-                rmse_values.append(mean_squared_error(self.y_test, y_pred, squared=False))
-            return rmse_values
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
+        y_pred = []
+        for i in range(len(self.X_test)):
+            predicted_price = self.predict_new_entry(self.X_test.iloc[i], n_neighbours)
+            y_pred.append(predicted_price)
+        return y_pred
+    
+    def calculate_rmse(self, n_values, st):
+        """
+        Calculates the RMSE values for different numbers of neighbours.
+
+        Parameters:
+        n_values (array): Array of n_neighbours values to try
+
+        Returns:
+        rmse_values (dict): Dictionary mapping n_neighbours to RMSE
+        """
+        rmse_values = {}
+        for n in n_values:
+            st.write(n)
+            y_pred = self.get_y_pred(n)
+            self.y_pred = y_pred
+            rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
+            rmse_values[n] = rmse
+        return rmse_values
         
     def find_best_k(self):
         """
