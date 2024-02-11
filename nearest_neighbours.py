@@ -51,7 +51,6 @@ class NearestNeighbours(BaseModel):
         """
         rmse_values = {}
         for n in n_values:
-            st.write(n)
             y_pred = self.get_y_pred(n)
             self.y_pred = y_pred
             rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
