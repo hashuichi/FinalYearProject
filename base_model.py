@@ -66,6 +66,19 @@ class BaseModel:
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
+    def calculate_y_pred(self):
+        """
+        Calculates the predicted array of labels from the test set.
+
+        Returns:
+        y_pred (array): The predicted labels
+        """
+        if self.model is not None:
+            self.y_pred = self.model.predict(self.X_test)
+            return self.y_pred
+        else:
+            raise ValueError("Model has not been trained. Call train_model() first.")
+        
     def get_y_pred(self):
         raise NotImplementedError("get_y_pred method must be implemented in the subclass.")
         
@@ -91,8 +104,10 @@ class BaseModel:
         col1, col2 = st.columns(2)
         if self.y_pred is None:
             self.calculate_y_pred()
-        col1.pyplot(self.plot_residual_plot())
         col2.pyplot(self.plot_predicted_actual())
+        col2.pyplot(self.plot_learning_curve())
+        col1.pyplot(self.plot_residuals_distribution())
+        col1.pyplot(self.plot_residual_plot())
         
     def plot_predicted_actual(self):
         """
