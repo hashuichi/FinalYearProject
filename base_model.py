@@ -107,7 +107,7 @@ class BaseModel:
         col2.pyplot(self.plot_predicted_actual())
         col2.pyplot(self.plot_learning_curve())
         col1.pyplot(self.plot_residuals_distribution())
-        col1.pyplot(self.plot_residual_plot())
+        # col1.pyplot(self.plot_residual_plot())
         
     def plot_predicted_actual(self):
         """

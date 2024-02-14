@@ -46,14 +46,12 @@ class LinearRegressionPage:
 
         plt.subplot(1, 2, 1)
         plt.scatter(self.y_test, y_pred_normal_eq, color='blue')
-        plt.plot([min(self.y_test), max(self.y_test)], [min(self.y_test), max(self.y_test)], color='red', linestyle='--')
         plt.xlabel('Actual Price')
         plt.ylabel('Predicted Price')
         plt.title('Actual vs Predicted Prices (Normal Equation)')
 
         plt.subplot(1, 2, 2)
         plt.scatter(self.y_test, y_pred_gradient_descent, color='green')
-        plt.plot([min(self.y_test), max(self.y_test)], [min(self.y_test), max(self.y_test)], color='red', linestyle='--')
         plt.xlabel('Actual Price')
         plt.ylabel('Predicted Price')
         plt.title('Actual vs Predicted Prices (Gradient Descent)')
