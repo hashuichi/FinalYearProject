@@ -39,7 +39,7 @@ class NearestNeighbours(BaseModel):
             y_pred.append(predicted_price)
         return y_pred
     
-    def calculate_rmse(self, n_values, st):
+    def calculate_rmse(self, n_values):
         """
         Calculates the RMSE values for different numbers of neighbours.
 

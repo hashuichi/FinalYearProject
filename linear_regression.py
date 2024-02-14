@@ -1,5 +1,6 @@
 from sklearn import linear_model
 import numpy as np
+from sklearn.metrics import mean_squared_error
 from base_model import BaseModel
 
 class LinearRegression(BaseModel):
@@ -71,3 +72,20 @@ class LinearRegression(BaseModel):
             predicted_price = self.predict_gradient_descent(self.X_test.iloc[i])
             y_pred.append(predicted_price)
         return y_pred
+    
+    def calculate_rmse(self, gradient_descent):
+        """
+        Calculates the RMSE values for different methods of linear regression
+
+        Parameters:
+        gradient_descent (boolean): If true, will use gradient descent method. Otherwise, normal eq method
+
+        Returns:
+        rmse_value (int): RMSE value
+        """
+        if (gradient_descent):
+            y_pred = self.get_y_pred_gradient_descent()
+        else:
+            y_pred = self.get_y_pred_normal_eq()
+        rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
+        return rmse
