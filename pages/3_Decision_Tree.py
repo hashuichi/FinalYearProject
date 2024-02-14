@@ -7,14 +7,15 @@ class DecisionTreePage:
     def run(self):
         st.title("Decision Tree")
         dl = DataLoader()
-        dl.load_data(DataPage().load_data())
+        selected_df = DataPage().get_data_selection()
+        dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
-        tree = DecisionTree(self.X_train, self.X_test, self.y_train, self.y_test)
+        tree = DecisionTree(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
         tree.train_model()
 
         st.subheader('Predict Hotel Price')
-        star_rating, distance = tree.get_new_hotel_fields(st)
-        new_price = tree.predict_price(star_rating, distance)
+        new_entry = tree.get_new_hotel_fields(st)
+        new_price = tree.predict_price(new_entry)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
         st.subheader('Results')
