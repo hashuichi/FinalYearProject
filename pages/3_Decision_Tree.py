@@ -11,11 +11,13 @@ class DecisionTreePage:
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         tree = DecisionTree(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
-        tree.train_model()
+        # tree.train_model()
+        tree.fit()
 
         st.subheader('Predict Hotel Price')
         new_entry = tree.get_new_hotel_fields(st)
-        new_price = tree.predict_price(new_entry)
+        # new_price = tree.predict_price(new_entry)
+        new_price = tree.predict(new_entry)
         st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
 
         st.subheader('Results')
