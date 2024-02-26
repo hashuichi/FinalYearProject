@@ -13,20 +13,22 @@ class NeuralNetworksPage:
 
         model = NeuralNetworks(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
         model.train_model(3)
-
-        st.subheader('Optimise Hotel Price')
-        new_entry = model.get_new_hotel_fields(st)
-        new_price = model.predict(new_entry)
-        st.write(new_price)
-        st.write(f'Predicted Price Per Night: £{new_price:.2f}')
+        tab1, tab2, tab3 = st.tabs(["Price Finder", "Model Results", "Performance Graphs"])
+        with tab1:
+            st.subheader('Optimise Hotel Price')
+            new_entry = model.get_new_hotel_fields(st)
+            new_price = model.predict(new_entry)
+            st.write(f'Predicted Price Per Night: £{new_price:.2f}')
         
-        st.subheader('Results')
-        model.calculate_y_pred()
-        rmse = model.get_rmse()
-        st.write(f'**RMSE:** {rmse:.2f}')
+        with tab2:
+            st.subheader('Results')
+            model.calculate_y_pred()
+            rmse = model.get_rmse()
+            st.write(f'**RMSE:** {rmse:.2f}')
 
-        st.subheader('Performance Graphs')
-        model.generate_plots(st)
+        with tab3:
+            st.subheader('Performance Graphs')
+            model.generate_plots(st)
 
 
 if __name__ == '__main__':
