@@ -85,7 +85,7 @@ __________________________
 - Encountered errors due to the room type being a string so had to map the room type values to integers
 
 ## Week 4 (February 5th)
-- Finished rewriting knn
+- Finished rewriting knn from scratch
 - Refactored code to ensure program still works for both old and new datasets
 - Created a variation of the Data page for the benchmark dataset which includes:
     - Table of the data
@@ -93,13 +93,18 @@ __________________________
     - Plots to visualise the data frequency and quality
 
 ## Week 5 (February 12th)
--
+- Finished rewriting Linear Regression from scratch using two methods:
+    - Analytical method of normal equation
+    - Iterative method of gradient descent
+- Refactored to ensure other algorithms still work as expected
 
 ## Week 6 (February 19th)
--
+- Finished rewriting Decision Tree from scratch (Took longer than expected due to the complexity of the grow_tree method)
 
 ## Week 7 (February 26th)
--
+- Implemented Neural Networks algorithm with keras
+- Implemented methods to calculate y_pred and rmse
+- Separated contents into 3 tabs for visibility
 
 ## Week 8 (March 4th)
 -
