@@ -107,7 +107,8 @@ __________________________
 - Separated contents into 3 tabs for visibility
 
 ## Week 8 (March 4th)
--
+- Merged Neural Networks commits
+- Starting working on the report
 
 ## Week 9 (March 11th)
 -
