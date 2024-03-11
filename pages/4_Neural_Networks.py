@@ -1,12 +1,34 @@
 import streamlit as st
-import pandas as pd
+from Data import DataPage
+from data_loader import DataLoader
+from neural_networks import NeuralNetworks
 
 class NeuralNetworksPage:
-    def __init__(self):
-        st.set_page_config(page_title="Neural Networks", layout="wide")
-
     def run(self):
         st.title("Neural Networks")
+        dl = DataLoader()
+        selected_df = DataPage().get_data_selection()
+        dl.load_data(selected_df)
+        self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
+
+        model = NeuralNetworks(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
+        model.train_model(3)
+        tab1, tab2, tab3 = st.tabs(["Price Finder", "Model Results", "Performance Graphs"])
+        with tab1:
+            st.subheader('Optimise Hotel Price')
+            new_entry = model.get_new_hotel_fields(st)
+            new_price = model.predict(new_entry)
+            st.write(f'Predicted Price Per Night: £{new_price:.2f}')
+        
+        with tab2:
+            st.subheader('Results')
+            model.calculate_y_pred()
+            rmse = model.get_rmse()
+            st.write(f'**RMSE:** {rmse:.2f}')
+
+        with tab3:
+            st.subheader('Performance Graphs')
+            model.generate_plots(st)
 
 
 if __name__ == '__main__':

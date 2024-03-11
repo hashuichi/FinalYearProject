@@ -105,7 +105,7 @@ class BaseModel:
         if self.y_pred is None:
             self.calculate_y_pred()
         col2.pyplot(self.plot_predicted_actual())
-        col2.pyplot(self.plot_learning_curve())
+        # col2.pyplot(self.plot_learning_curve())
         col1.pyplot(self.plot_residuals_distribution())
         # col1.pyplot(self.plot_residual_plot())
         
