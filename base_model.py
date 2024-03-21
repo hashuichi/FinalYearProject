@@ -102,8 +102,7 @@ class BaseModel:
         Displays the different plots to visualise the performance of the model.
         '''
         col1, col2 = st.columns(2)
-        if self.y_pred is None:
-            self.calculate_y_pred()
+
         col2.pyplot(self.plot_predicted_actual())
         # col2.pyplot(self.plot_learning_curve())
         col1.pyplot(self.plot_residuals_distribution())

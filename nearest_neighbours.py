@@ -3,11 +3,12 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
 from base_model import BaseModel
+from scipy.spatial import distance
 
 class NearestNeighbours(BaseModel):
-    def _find_nearest_neighbors(self, new_entry):
-        distances = np.sqrt(np.sum((self.X_train - new_entry)**2, axis=1))
-        nearest_indices = np.argsort(distances)[:self.n_neighbours]
+    def _find_nearest_neighbors(self, new_entry, n_neighbours):
+        distances = distance.cdist([new_entry], self.X_train, 'euclidean')[0]
+        nearest_indices = np.argpartition(distances, n_neighbours)[:n_neighbours]
         nearest_y = self.y_train.iloc[nearest_indices]
         return nearest_y
 
@@ -22,7 +23,7 @@ class NearestNeighbours(BaseModel):
         knn_model (KNeighborsRegressor): The trained KNN regression model.
         """
         self.n_neighbours = n_neighbours
-        nearest_y = self._find_nearest_neighbors(new_entry)
+        nearest_y = self._find_nearest_neighbors(new_entry, n_neighbours)
         predicted_price = np.mean(nearest_y)
         return predicted_price
 
@@ -37,8 +38,10 @@ class NearestNeighbours(BaseModel):
         for i in range(len(self.X_test)):
             predicted_price = self.predict_new_entry(self.X_test.iloc[i], n_neighbours)
             y_pred.append(predicted_price)
+        self.y_pred = y_pred
         return y_pred
-    
+
+        
     def calculate_rmse(self, n_values):
         """
         Calculates the RMSE values for different numbers of neighbours.
