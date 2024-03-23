@@ -26,8 +26,8 @@ class NearestNeighboursPage:
             best_k, best_rmse = knn.find_best_k()
             self.display_best_k_and_rmse(best_k, best_rmse)
 
-        st.subheader('Performance Graphs (~1 Minute)')
-        if st.button("Generate Performance Graphs"):
+        st.subheader('Performance Graphs')
+        if st.button("Generate Performance Graphs (~1 Minute)"):
             knn.get_y_pred()
             knn.generate_plots(st)
 
