@@ -19,8 +19,6 @@ class LinearRegressionPage:
 
         st.subheader('Optimise Hotel Price')
         new_entry = lr.get_new_hotel_fields(st)
-        new_price = lr.predict_price(new_entry)
-        st.write(f'Predicted Price Per Night: £{new_price[0]:.2f}')
         predicted_price_normal_eq = lr.predict_normal_eq(new_entry)
         st.write(f"Predicted price using normal equation method: £{predicted_price_normal_eq:.2f}")
         predicted_price_gradient_descent = lr.predict_gradient_descent(new_entry)
@@ -28,8 +26,10 @@ class LinearRegressionPage:
         
         st.subheader('Results')
         st.pyplot(self.plot_actual_vs_predicted_prices(lr))
-        rmse = lr.calculate_rmse_value()
-        st.write(f'**RMSE:** {rmse:.2f}')
+        rmse_normal_eq = lr.calculate_rmse(False)
+        st.write(f'**RMSE using normal equation method:** {rmse_normal_eq:.2f}')
+        rmse_gradient_descent = lr.calculate_rmse(True)
+        st.write(f'**RMSE using gradient descent method:** {rmse_gradient_descent:.2f}')
 
         st.subheader('Performance Graphs')
         lr.generate_plots(st)
