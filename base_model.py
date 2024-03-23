@@ -97,11 +97,13 @@ class BaseModel:
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
-    def generate_plots(self, st):
+    def generate_plots(self, st, optional_y_pred=None):
         '''
         Displays the different plots to visualise the performance of the model.
         '''
         col1, col2 = st.columns(2)
+        if optional_y_pred is not None:
+            self.y_pred = optional_y_pred
 
         col2.pyplot(self.plot_predicted_actual())
         # col2.pyplot(self.plot_learning_curve())
