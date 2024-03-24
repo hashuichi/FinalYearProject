@@ -12,13 +12,14 @@ class NearestNeighboursPage:
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         knn = NearestNeighbours(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
-        knn.get_y_pred()
+        y_pred = knn.get_y_pred()
 
         st.subheader('Optimise Hotel Price')
         new_entry = knn.get_new_hotel_fields(st)
         new_price = knn.predict_new_entry(new_entry)
         st.write(f'Best Selling Price Per Night Scratch: £{new_price:.2f}')
 
+        st.subheader('Results')
         if st.button("Genereate RMSE Plot (~5 Minutes)"):
             n_values = list(range(2, 20))
             rmse_values = knn.calculate_rmse(n_values)
@@ -28,8 +29,7 @@ class NearestNeighboursPage:
 
         st.subheader('Performance Graphs')
         if st.button("Generate Performance Graphs (~1 Minute)"):
-            knn.get_y_pred()
-            knn.generate_plots(st)
+            knn.generate_plots(st, y_pred)
 
 
     def display_rmse_chart(self, rmse_values):
