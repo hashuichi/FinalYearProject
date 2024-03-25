@@ -11,20 +11,25 @@ class NeuralNetworksPage:
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
 
-        model = NeuralNetworks(selected_df, self.X_train, self.X_test, self.y_train, self.y_test, 3)
-        neural_net = model.train_model()
-        y_pred = model.calculate_y_pred(neural_net)
+        neural_net = NeuralNetworks(selected_df, self.X_train, self.X_test, self.y_train, self.y_test, 3)
+        feedforward_model = neural_net.train_feedforward()
+        recurrent_model = neural_net.train_recurrent()
+        y_pred_feedforward = neural_net.calculate_y_pred_feedforward(feedforward_model)
         st.subheader('Optimise Hotel Price')
-        new_entry = model.get_new_hotel_fields(st)
-        new_price = model.predict(neural_net, new_entry)
-        st.write(f'Predicted Price Per Night: £{new_price:.2f}')
+        new_entry = neural_net.get_new_hotel_fields(st)
+        new_price_feedforward = neural_net.predict_feedforward(feedforward_model, new_entry)
+        st.write(f'Predicted Price Per Night (Feedforward Networks): £{new_price_feedforward:.2f}')
+        new_price_recurrent = neural_net.predict_recurrent(recurrent_model, new_entry)
+        st.write(f'Predicted Price Per Night (Recurrent Networks): £{new_price_recurrent:.2f}')
         
         st.subheader('Results')
-        rmse = model.get_rmse(y_pred)
-        st.write(f'**RMSE:** {rmse:.2f}')
+        rmse_feedforward = neural_net.get_rmse(y_pred_feedforward)
+        st.write(f'**RMSE with feedforward networks:** {rmse_feedforward:.2f}')
+        rmse_recurrent = neural_net.evaluate_model(recurrent_model)
+        st.write(f'**RMSE with recurrent networks:** {rmse_recurrent:.2f}')
 
         st.subheader('Performance Graphs')
-        model.generate_plots(st, y_pred)
+        neural_net.generate_plots(st, y_pred_feedforward)
 
 
 if __name__ == '__main__':
