@@ -20,9 +20,9 @@ class LinearRegressionPage:
         st.subheader('Optimise Hotel Price')
         new_entry = lr.get_new_hotel_fields(st)
         predicted_price_normal_eq = lr.predict_normal_eq(new_entry)
-        st.write(f"Predicted price using normal equation method: £{predicted_price_normal_eq:.2f}")
+        st.write(f"Best price using normal equation method: £{predicted_price_normal_eq:.2f}")
         predicted_price_gradient_descent = lr.predict_gradient_descent(new_entry)
-        st.write(f"Predicted price using gradient descent method: £{predicted_price_gradient_descent:.2f}")
+        st.write(f"Best price using gradient descent method: £{predicted_price_gradient_descent:.2f}")
         
         st.subheader('Results')
         st.pyplot(self.plot_actual_vs_predicted_prices(lr))

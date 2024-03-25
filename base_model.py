@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import mean_squared_error
-import streamlit as st
 
 class BaseModel:
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):

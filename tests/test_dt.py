@@ -14,15 +14,15 @@ class TestDT(unittest.TestCase):
         dl.load_data(dataframe=self.sample_data)
         self.X, self.y = dl.get_features_labels()
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
-        self.model = DecisionTree(self.X_train, self.X_test, self.y_train, self.y_test)
+        self.model = DecisionTree(self.sample_data, self.X_train, self.X_test, self.y_train, self.y_test)
         self.model.train_model()
 
     def test_train_model(self):
         self.assertIsNotNone(self.model)
 
     def test_predict_price(self):
-        predicted_price = self.model.predict_price(3, 2500)
-        self.assertEqual(predicted_price[0], 70.0)
+        predicted_price = self.model.predict_price([3, 2500])
+        self.assertEqual(predicted_price, 70.0)
 
     def test_calculate_y_pred(self):
         y_pred = self.model.calculate_y_pred()

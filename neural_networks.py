@@ -5,21 +5,22 @@ from base_model import BaseModel
 import streamlit as st
 
 class NeuralNetworks(BaseModel):
-    def __init__(_self, selected_df, X_train, X_test, y_train, y_test, max_depth):
+    def __init__(_self, selected_df, X_train, X_test, y_train, y_test, num_layers):
         super().__init__(selected_df, X_train, X_test, y_train, y_test)
-        _self.max_depth = max_depth
+        _self.num_layers = num_layers
 
-    def build_feedforward(self):
+    def build_model(self):
         model = Sequential()
         model.add(Dense(64, input_dim=self.X_train.shape[1], activation='relu'))
-        model.add(Dense(32, activation='relu'))
+        for _ in range(self.num_layers - 1):
+            model.add(Dense(32, activation='relu'))
         model.add(Dense(1, activation='linear'))
         model.compile(loss='mean_squared_error', optimizer='adam')
         return model
 
     @st.cache_resource()
     def train_feedforward(_self):
-        _self.model = _self.build_feedforward()
+        _self.model = _self.build_model()
         _self.model.fit(_self.X_train, _self.y_train, epochs=1, batch_size=10, verbose=0)
         return _self.model
 
@@ -40,17 +41,9 @@ class NeuralNetworks(BaseModel):
         _self.y_pred = y_pred
         return y_pred
     
-    def build_recurrent(_self):    
-        model = Sequential()
-        model.add(LSTM(64, input_shape=(_self.X_train.shape[1], 1), activation='relu'))
-        model.add(Dense(32, activation='relu'))
-        # model.add(Dense(1, activation='linear'))
-        model.compile(loss='mean_squared_error', optimizer='adam')
-        return model
-    
     @st.cache_resource()
     def train_recurrent(_self):
-        model = _self.build_recurrent()
+        model = _self.build_model()
         model.fit(_self.X_train, _self.y_train, epochs=1, batch_size=10, verbose=0)
         return model
     
@@ -63,3 +56,4 @@ class NeuralNetworks(BaseModel):
 
     def get_rmse(_self, y_pred):
         return np.sqrt(np.mean((_self.y_test - y_pred) ** 2))
+    

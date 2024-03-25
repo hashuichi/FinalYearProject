@@ -17,7 +17,7 @@ class NearestNeighboursPage:
         st.subheader('Optimise Hotel Price')
         new_entry = knn.get_new_hotel_fields(st)
         new_price = knn.predict_new_entry(new_entry)
-        st.write(f'Best Selling Price Per Night Scratch: £{new_price:.2f}')
+        st.write(f'Best Selling Price Per Night: £{new_price:.2f}')
 
         st.subheader('Results')
         if st.button("Genereate RMSE Plot (~5 Minutes)"):

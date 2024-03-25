@@ -14,20 +14,20 @@ class TestKNN(unittest.TestCase):
         dl.load_data(dataframe=self.sample_data)
         self.X, self.y = dl.get_features_labels()
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
-        self.model = NearestNeighbours(self.X_train, self.X_test, self.y_train, self.y_test)
-        self.model.train_model(1)
+        self.model = NearestNeighbours(self.sample_data, self.X_train, self.X_test, self.y_train, self.y_test)
+        self.y_pred = self.model.get_y_pred()
 
     def test_train_model(self):
         self.assertIsNotNone(self.model)
 
     def test_predict_price(self):
-        predicted_price = self.model.predict_price(3, 2500)
-        self.assertEqual(predicted_price[0], 70)
+        predicted_price = self.model.predict_new_entry([3, 2500])
+        self.assertEqual(predicted_price, 142.0)
 
     def test_calculate_rmse_values(self):
         list_neighbours = list(range(1, len(self.y_test)))
-        rmse_values = self.model.calculate_rmse_values(list_neighbours)
-        self.assertEqual(rmse_values[0], 175.07141400011596)
+        rmse_values = self.model.calculate_rmse(list_neighbours)
+        self.assertEqual(rmse_values[1], 175.07141400011596)
 
     def test_find_best_k(self):
         max_k=2
