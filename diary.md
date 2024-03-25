@@ -74,14 +74,16 @@ __________________________
 - Selected the best dataset (London Airbnb Listings)
 
 ## Week 2 (January 22nd)
-- Started preprocessing the chosen dataset.
+- Started preprocessing and normalising the chosen dataset
 - Cleaned dataset by removing 20000 rows of redundant data
 - Incorporated the new dataset as an option in the select box
-- Started implementing session states from Streamlit to differentiate between the old datasets and the new benchmark dataset.
+- Started implementing session states from Streamlit to differentiate between the old datasets and the new benchmark dataset
 
 ## Week 3 (January 29th)
+- Removed session states as it did not work as intended. So reverted to simply using a global variable to differentiate the chosen dataset
 - Added new input boxes for the new features of the dataset
-- Started rewriting knn from scratch.
+- Rewrote knn tests to work for new methods
+- Started rewriting knn from scratch
 - Encountered errors due to the room type being a string so had to map the room type values to integers
 
 ## Week 4 (February 5th)
@@ -93,16 +95,21 @@ __________________________
     - Plots to visualise the data frequency and quality
 
 ## Week 5 (February 12th)
+- Rewrote lr tests to work for new methods
 - Finished rewriting Linear Regression from scratch using two methods:
     - Analytical method of normal equation
     - Iterative method of gradient descent
 - Refactored to ensure other algorithms still work as expected
 
 ## Week 6 (February 19th)
+- Rewrote dt tests to work for new methods
 - Finished rewriting Decision Tree from scratch (Took longer than expected due to the complexity of the grow_tree method)
 
 ## Week 7 (February 26th)
-- Implemented Neural Networks algorithm with keras
+- Wrote neural net tests with the expectation I will implement two different architectures:
+    - Feedforward Neural Networks
+    - Recurrent Neural Networks (Specifically long-short term memory network)
+- Implemented Feedforward Neural Networks algorithm with keras
 - Implemented methods to calculate y_pred and rmse
 - Separated contents into 3 tabs for visibility
 
@@ -111,10 +118,20 @@ __________________________
 - Starting working on the report
 
 ## Week 9 (March 11th)
--
+- Implemented Recurrent Neural Networks with keras
+- Implemented methods to calculate y_pred and rmse for Recurrent networks
+- Renamed methods and varaibles to differentiate between feedforward and recurrent
+
 
 ## Week 10 (March 18th)
--
+- Cached algorithm results uisng streamlit to speed up loading times when adjusting parameters for prediction and visualisation
+- Completed the following sections of the report:
+    - Introduction
+    - Machine Learning
+    - Professional Issues
 
 ## Week 11 (March 25th)
--
+- Attend supervisor meeting
+- Finalise the report
+- Prepare the poster
+- Prepare for the demo
