@@ -58,6 +58,7 @@ class LinearRegression(BaseModel):
         for i in range(len(self.X_test)):
             predicted_price = self.predict_normal_eq(self.X_test.iloc[i])
             y_pred.append(predicted_price)
+        self.y_pred = y_pred
         return y_pred
     
     def get_y_pred_gradient_descent(self):

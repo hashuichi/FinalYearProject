@@ -3,11 +3,13 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
 from base_model import BaseModel
+from scipy.spatial import distance
+import streamlit as st
 
 class NearestNeighbours(BaseModel):
-    def _find_nearest_neighbors(self, new_entry):
-        distances = np.sqrt(np.sum((self.X_train - new_entry)**2, axis=1))
-        nearest_indices = np.argsort(distances)[:self.n_neighbours]
+    def _find_nearest_neighbors(self, new_entry, n_neighbours):
+        distances = distance.cdist([new_entry], self.X_train, 'euclidean')[0]
+        nearest_indices = np.argpartition(distances, n_neighbours)[:n_neighbours]
         nearest_y = self.y_train.iloc[nearest_indices]
         return nearest_y
 
@@ -22,7 +24,7 @@ class NearestNeighbours(BaseModel):
         knn_model (KNeighborsRegressor): The trained KNN regression model.
         """
         self.n_neighbours = n_neighbours
-        nearest_y = self._find_nearest_neighbors(new_entry)
+        nearest_y = self._find_nearest_neighbors(new_entry, n_neighbours)
         predicted_price = np.mean(nearest_y)
         return predicted_price
 
@@ -37,9 +39,11 @@ class NearestNeighbours(BaseModel):
         for i in range(len(self.X_test)):
             predicted_price = self.predict_new_entry(self.X_test.iloc[i], n_neighbours)
             y_pred.append(predicted_price)
+        self.y_pred = y_pred
         return y_pred
-    
-    def calculate_rmse(self, n_values):
+
+    @st.cache_resource()
+    def calculate_rmse(_self, _n_values):
         """
         Calculates the RMSE values for different numbers of neighbours.
 
@@ -50,14 +54,15 @@ class NearestNeighbours(BaseModel):
         rmse_values (dict): Dictionary mapping n_neighbours to RMSE
         """
         rmse_values = {}
-        for n in n_values:
-            y_pred = self.get_y_pred(n)
-            self.y_pred = y_pred
-            rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
+        for n in _n_values:
+            y_pred = _self.get_y_pred(n)
+            _self.y_pred = y_pred
+            rmse = np.sqrt(mean_squared_error(_self.y_test, y_pred))
             rmse_values[n] = rmse
         return rmse_values
         
-    def find_best_k(self):
+    @st.cache_resource()
+    def find_best_k(_self):
         """
         Find the best k for a KNN model using cross validation from the test features and labels.
 
@@ -65,9 +70,9 @@ class NearestNeighbours(BaseModel):
         best_k (int): The best k to use for the given dataset.
         best_rmse (int): The rmse of the dataset using the best k.
         """
-        param_grid = {'n_neighbors': list(range(1, min(17, len(self.y_test))))}
-        grid_search = GridSearchCV(KNeighborsRegressor(), param_grid, cv=min(5, len(self.y_test)), scoring='neg_mean_squared_error')
-        grid_search.fit(self.X_test, self.y_test)
+        param_grid = {'n_neighbors': list(range(1, min(17, len(_self.y_test))))}
+        grid_search = GridSearchCV(KNeighborsRegressor(), param_grid, cv=min(5, len(_self.y_test)), scoring='neg_mean_squared_error')
+        grid_search.fit(_self.X_test, _self.y_test)
         best_k = grid_search.best_params_['n_neighbors']
         best_mse = -grid_search.best_score_
         return best_k, np.sqrt(best_mse)

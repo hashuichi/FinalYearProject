@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import mean_squared_error
-import streamlit as st
 
 class BaseModel:
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):
@@ -97,15 +96,16 @@ class BaseModel:
         else:
             raise ValueError("Model has not been trained. Call train_model() first.")
         
-    def generate_plots(self, st):
+    def generate_plots(self, st, optional_y_pred=None):
         '''
         Displays the different plots to visualise the performance of the model.
         '''
         col1, col2 = st.columns(2)
-        if self.y_pred is None:
-            self.calculate_y_pred()
+        if optional_y_pred is not None:
+            self.y_pred = optional_y_pred
+
         col2.pyplot(self.plot_predicted_actual())
-        col2.pyplot(self.plot_learning_curve())
+        # col2.pyplot(self.plot_learning_curve())
         col1.pyplot(self.plot_residuals_distribution())
         # col1.pyplot(self.plot_residual_plot())
         
