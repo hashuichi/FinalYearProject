@@ -40,61 +40,6 @@ class BaseModel:
             star_rating = col2.number_input('Star Rating', 1, 5, 2)
             distance = col3.number_input('Distance', 100, 5000, 100)
             return [star_rating, distance]
-
-    def predict_price(self, new_entry):
-        """
-        Predict the price using a trained model.
-
-        Parameters:
-        new_entry (array): Array containing values of new features.
-
-        Returns:
-        predicted_price (float): Predicted price for the new data point.
-        """
-        if self.model is not None:
-            if self.selected_df == "Benchmark Dataset":
-                new_data = pd.DataFrame({
-                    "room_type": new_entry[0], 
-                    "accommodates": new_entry[1], 
-                    "bathrooms": new_entry[2], 
-                    "beds": new_entry[3]}, index=[0])
-            else:    
-                new_data = pd.DataFrame({"star_rating": new_entry[0], "distance": new_entry[1]}, index=[0])
-            predicted_price = self.model.predict(new_data)
-            return predicted_price
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
-        
-    def calculate_y_pred(self):
-        """
-        Calculates the predicted array of labels from the test set.
-
-        Returns:
-        y_pred (array): The predicted labels
-        """
-        if self.model is not None:
-            self.y_pred = self.model.predict(self.X_test)
-            return self.y_pred
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
-        
-    def get_y_pred(self):
-        raise NotImplementedError("get_y_pred method must be implemented in the subclass.")
-        
-    def calculate_rmse_value(self):
-        """
-        Calculates rmse using the predicted labels for the test set
-
-        Returns:
-        rmse_value (int): The RMSE value of the dataset.
-        """
-        if self.y_pred is None:
-            self.calculate_y_pred()
-        if self.model is not None:
-            rmse = mean_squared_error(self.y_test, self.calculate_y_pred(), squared=False)
-            return rmse
-        else:
-            raise ValueError("Model has not been trained. Call train_model() first.")
         
     def generate_plots(self, st, optional_y_pred=None):
         '''

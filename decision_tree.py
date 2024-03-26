@@ -1,72 +1,75 @@
-from sklearn import tree
 from base_model import BaseModel
 import numpy as np
+from sklearn.metrics import mean_squared_error
 
 class DecisionTree(BaseModel):
-    def train_model(self):
-        """
-        Train a Decision Tree model on the given features and labels.
-
-        Returns:
-        model (DecisionTreeRegressor): The trained decision tree model.
-        """
-        self.model = tree.DecisionTreeRegressor(random_state=500)
-        self.model.fit(self.X_train, self.y_train)
-        return self.model
-    
-    def fit(self, max_depth=5):
+    def __init__(self, selected_df, X_train, X_test, y_train, y_test, max_depth=None, min_samples_split=2):
+        super().__init__(selected_df, X_train, X_test, y_train, y_test)
         self.max_depth = max_depth
-        self.model = self._grow_tree(self.X_train, self.y_train, depth=0)
+        self.min_samples_split = min_samples_split
+        self.tree = None
 
-    def _grow_tree(self, X, y, depth):
-        num_samples, num_features = X.shape
-        if len(np.unique(y)) == 1:
-            return np.unique(y)[0]
-        if num_samples == 1 or (self.max_depth is not None and depth >= self.max_depth):
-            return y.iloc[0]
-        
-        best_split = self._find_best_split(X, y)
-        feature_name, threshold = best_split['feature_name'], best_split['threshold']
-        left_idxs = X[feature_name] <= threshold
-        right_idxs = X[feature_name] > threshold
-        
-        left_subtree = self._grow_tree(X[left_idxs], y[left_idxs], depth + 1)
-        right_subtree = self._grow_tree(X[right_idxs], y[right_idxs], depth + 1)
-        
-        return {'feature_name': feature_name, 'threshold': threshold, 'left': left_subtree, 'right': right_subtree}
+    def fit(self, X_train, y_train):
+        self.tree = self._grow_tree(X_train, y_train)
+        return self.tree
 
-    def _find_best_split(self, X, y):
+    def _grow_tree(self, X, y, depth=0):
         num_samples, num_features = X.shape
-        best_split = {}
+        num_labels = len(np.unique(y))
+
+        # Stopping criteria
+        if (self.max_depth is not None and depth >= self.max_depth) or num_samples < self.min_samples_split or num_labels == 1:
+            return np.mean(y)
+
+        # Find the best split
+        best_feature, best_threshold = None, None
         best_gini = float('inf')
-        for feature_name in X.columns:
-            thresholds = np.unique(X[feature_name])
+
+        for feature_idx in range(num_features):
+            thresholds = np.unique(X[:, feature_idx])
             for threshold in thresholds:
-                left_idxs = X[feature_name] <= threshold
-                right_idxs = X[feature_name] > threshold
-                gini = self._gini_impurity(y[left_idxs], y[right_idxs])
+                left_indices = X[:, feature_idx] <= threshold
+                y_left = y[left_indices]
+                y_right = y[~left_indices]
+
+                gini = self._calculate_gini_impurity(y_left, y_right)
                 if gini < best_gini:
-                    best_split = {'feature_name': feature_name, 'threshold': threshold, 'gini': gini}
+                    best_feature = feature_idx
+                    best_threshold = threshold
                     best_gini = gini
-        return best_split
 
-    def _gini_impurity(self, left_y, right_y):
-        p_left = len(left_y) / (len(left_y) + len(right_y))
-        p_right = len(right_y) / (len(left_y) + len(right_y))
-        gini_left = 1 - sum([(np.sum(left_y == c) / len(left_y))**2 for c in np.unique(left_y)])
-        gini_right = 1 - sum([(np.sum(right_y == c) / len(right_y))**2 for c in np.unique(right_y)])
-        gini = p_left * gini_left + p_right * gini_right
-        return gini
+        # Split the data
+        left_indices = X[:, best_feature] <= best_threshold
+        X_left, y_left = X[left_indices], y[left_indices]
+        X_right, y_right = X[~left_indices], y[~left_indices]
 
-    def predict(self, X):
-        return np.array([self._predict_entry(x, self.model) for x in X.values])
+        # Recursively grow subtrees
+        left_subtree = self._grow_tree(X_left, y_left, depth + 1)
+        right_subtree = self._grow_tree(X_right, y_right, depth + 1)
+
+        return (best_feature, best_threshold, left_subtree, right_subtree)
+
+    def _calculate_gini_impurity(self, y_left, y_right):
+        p_left = len(y_left) / (len(y_left) + len(y_right))
+        p_right = len(y_right) / (len(y_left) + len(y_right))
+        gini_left = 1 - np.sum((np.unique(y_left, return_counts=True)[1] / len(y_left)) ** 2)
+        gini_right = 1 - np.sum((np.unique(y_right, return_counts=True)[1] / len(y_right)) ** 2)
+        return p_left * gini_left + p_right * gini_right
+
+    def calculate_y_pred(self, X):
+        return np.array([self._predict_entry(x, self.tree) for x in X])
 
     def _predict_entry(self, x, tree):
-        if isinstance(tree, dict):
-            feature_name, threshold = tree['feature_name'], tree['threshold']
-            if x[feature_name] <= threshold:
-                return self._predict_entry(x, tree['left'])
-            else:
-                return self._predict_entry(x, tree['right'])
-        else:
+        if isinstance(tree, np.float64):
             return tree
+        feature_idx, threshold, left_subtree, right_subtree = tree
+        if x[feature_idx] <= threshold:
+            return self._predict_entry(x, left_subtree)
+        else:
+            return self._predict_entry(x, right_subtree)
+
+    def predict_price(self, x):
+        return self._predict_entry(x, self.tree)
+    
+    def calculate_rmse_value(self, y_test, y_pred):
+        return np.sqrt(mean_squared_error(y_test, y_pred))

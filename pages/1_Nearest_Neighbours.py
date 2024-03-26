@@ -36,7 +36,6 @@ class NearestNeighboursPage:
         """
         Displays num_neighboours vs rmse_values chart
         """
-        st.subheader('Results')
         n_values = list(rmse_values.keys())
         rmse_scores = list(rmse_values.values())
         rmse_data = pd.DataFrame(
