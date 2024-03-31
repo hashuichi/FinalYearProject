@@ -11,7 +11,7 @@ class DecisionTreePage:
         selected_df = DataPage().get_data_selection()
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
-        tree = DecisionTree(selected_df, self.X_train, self.X_test, self.y_train, self.y_test, 3)
+        tree = DecisionTree(selected_df, self.X_train, self.X_test, self.y_train, self.y_test, 10)
         model = tree.fit(self.X_train.values, self.y_train.values)
 
         st.subheader('Predict Hotel Price')

@@ -132,6 +132,7 @@ __________________________
 
 ## Week 11 (March 25th)
 - Attend supervisor meeting
+- Complete final adjustments and refactoring to code
 - Finalise the report
 - Prepare the poster
 - Prepare for the demo

@@ -16,8 +16,8 @@ class DataPage:
 
     def run(self):
         st.set_page_config(page_title="Data", layout="wide")
-        self.load_data()
         st.title("Data")
+        self.load_data()
         col1, col2 = st.columns([2, 1])
         if st.session_state.selected_df == "Benchmark Dataset":
             with col1:
