@@ -23,8 +23,6 @@ class DataPage:
             with col1:
                 self.generate_plots()
             col2.write(self.rename_benchmark_data())
-            col2.subheader("Room Type Key")
-            col2.table(self.room_type_map)
         else:
             col1.pyplot(self.display_price_distance_chart())
             col1.pyplot(self.display_price_star_rating_chart())
@@ -50,7 +48,9 @@ class DataPage:
                 'beds': 'Beds',
                 'price': 'Price ($)'
             }
-            return self.data.rename(columns=new_column_names)
+            renamed_data = self.data.rename(columns=new_column_names)
+            renamed_data.iloc[:, 0] = renamed_data.iloc[:, 0].map(self.room_type_map)
+            return renamed_data
         else:
             st.warning("No data selected.")
             return pd.DataFrame()
