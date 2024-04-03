@@ -11,25 +11,36 @@ class LinearRegressionPage:
         selected_df = DataPage().get_data_selection()
         dl.load_data(selected_df)
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
-
         lr = LinearRegression(selected_df, self.X_train, self.X_test, self.y_train, self.y_test)
-        lr.train_model()
-        lr.fit_normal_eq()
-        lr.fit_gradient_descent()
-
-        st.subheader('Optimise Hotel Price')
-        new_entry = lr.get_new_hotel_fields(st)
-        predicted_price_normal_eq = lr.predict_normal_eq(new_entry)
-        st.write(f"Best price using normal equation method: £{predicted_price_normal_eq:.2f}")
-        predicted_price_gradient_descent = lr.predict_gradient_descent(new_entry)
-        st.write(f"Best price using gradient descent method: £{predicted_price_gradient_descent:.2f}")
         
-        st.subheader('Results')
-        st.pyplot(self.plot_actual_vs_predicted_prices(lr))
-        rmse_normal_eq = lr.calculate_rmse(False)
-        st.write(f'**RMSE using normal equation method:** {rmse_normal_eq:.2f}')
-        rmse_gradient_descent = lr.calculate_rmse(True)
-        st.write(f'**RMSE using gradient descent method:** {rmse_gradient_descent:.2f}')
+        if lr.selected_df == "Benchmark Dataset":
+            lr.fit_normal_eq()
+            lr.fit_gradient_descent()
+
+            st.subheader('Optimise Hotel Price')
+            new_entry = lr.get_new_hotel_fields(st)
+            predicted_price_normal_eq = lr.predict_normal_eq(new_entry)
+            st.write(f"Best price using normal equation method: £{predicted_price_normal_eq:.2f}")
+            predicted_price_gradient_descent = lr.predict_gradient_descent(new_entry)
+            st.write(f"Best price using gradient descent method: £{predicted_price_gradient_descent:.2f}")
+            
+            st.subheader('Results')
+            st.pyplot(self.plot_actual_vs_predicted_prices(lr))
+            rmse_normal_eq = lr.calculate_rmse(False)
+            st.write(f'**RMSE using normal equation method:** {rmse_normal_eq:.2f}')
+            rmse_gradient_descent = lr.calculate_rmse(True)
+            st.write(f'**RMSE using gradient descent method:** {rmse_gradient_descent:.2f}')
+        else:
+            lr.fit_normal_eq()
+
+            st.subheader('Optimise Hotel Price')
+            new_entry = lr.get_new_hotel_fields(st)
+            predicted_price_normal_eq = lr.predict_normal_eq(new_entry)
+            st.write(f"Best price: £{predicted_price_normal_eq:.2f}")
+            
+            st.subheader('Results')
+            rmse_normal_eq = lr.calculate_rmse(False)
+            st.write(f'**RMSE:** {rmse_normal_eq:.2f}')
 
         st.subheader('Performance Graphs')
         lr.generate_plots(st)

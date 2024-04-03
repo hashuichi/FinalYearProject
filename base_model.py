@@ -1,8 +1,6 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
-from sklearn.metrics import mean_squared_error
 
 class BaseModel:
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):
@@ -50,9 +48,8 @@ class BaseModel:
             self.y_pred = optional_y_pred
 
         col2.pyplot(self.plot_predicted_actual())
-        # col2.pyplot(self.plot_learning_curve())
         col1.pyplot(self.plot_residuals_distribution())
-        # col1.pyplot(self.plot_residual_plot())
+        col1.pyplot(self.plot_residual_plot())
         
     def plot_predicted_actual(self):
         """
@@ -75,34 +72,23 @@ class BaseModel:
         Returns:
         fig (Figure): The figure containing the plot
         """
-        fig, ax = plt.subplots()
-        scatter = ax.scatter(self.X_test['distance'], (self.y_test - self.y_pred), c=self.X_test['star_rating'], cmap='viridis', label='Residual Plot')
-        ax.set_title('Residual Plot')
-        ax.set_xlabel('Distance')
-        ax.set_ylabel('Residuals (Actual - Predicted)')
-        ax.legend(*scatter.legend_elements(), title='Star Rating')
-        return fig
-    
-    def plot_learning_curve(self):
-        """
-        Plots the learning curve for the model
+        if self.selected_df == "Benchmark Dataset":
+            X_line = self.X_test['accommodates']
+            X_label = 'Number of Occupants'
+            colours = self.X_test['room_type']
+            legend_title = 'Room Type'
+        else:
+            X_line = self.X_test['distance']
+            X_label = 'Distance'
+            colours = self.X_test['star_rating']
+            legend_title = 'Star Rating'
 
-        Returns:
-        fig (Figure): The figure containing the plot
-        """
-        train_sizes, train_scores, test_scores = learning_curve(self.model, self.X_train, self.y_train, cv=5, scoring='neg_mean_squared_error')
-        
-        train_scores_mean = -np.mean(train_scores, axis=1)
-        test_scores_mean = -np.mean(test_scores, axis=1)
-        
         fig, ax = plt.subplots()
-        ax.plot(train_sizes, train_scores_mean, label='Training error')
-        ax.plot(train_sizes, test_scores_mean, label='Validation error')
-        
-        ax.set_title('Learning Curve')
-        ax.set_xlabel('Training Examples')
-        ax.set_ylabel('Mean Squared Error')
-        ax.legend()
+        scatter = ax.scatter(X_line, (self.y_test - self.y_pred), c=colours, cmap='viridis', label='Residual Plot')
+        ax.set_title('Residual Plot')
+        ax.set_xlabel(X_label)
+        ax.set_ylabel('Residuals (Actual - Predicted)')
+        ax.legend(*scatter.legend_elements(), title=legend_title)
         return fig
     
     def plot_residuals_distribution(self):
