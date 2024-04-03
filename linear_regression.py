@@ -3,12 +3,28 @@ from sklearn.metrics import mean_squared_error
 from base_model import BaseModel
 
 class LinearRegression(BaseModel):
+    """A class for implementing a Linear Regression model using different methods for training and prediction.
+
+    This class extends the BaseModel class and implements linear regression models using normal equation and
+    gradient descent methods for predicting target values based on features.
+    """
+
     def fit_normal_eq(self):
+        """Fits the linear regression model using the normal equation method."""
         X = np.concatenate((np.ones((self.X_train.shape[0], 1)), self.X_train), axis=1)
         y = self.y_train.to_numpy().reshape(-1, 1)
         self.model_normal_eq = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
 
     def predict_normal_eq(self, new_entry):
+        """
+        Predicts the target value for a new data entry using the linear regression model trained with normal equation.
+
+        Parameters:
+            new_entry (array): The feature vector of the new data entry.
+
+        Returns:
+            float: The predicted target value.
+        """
         if self.model_normal_eq is None:
             print("Normal equation model not trained. Call fit_normal_eq() first.")
             return
@@ -17,6 +33,13 @@ class LinearRegression(BaseModel):
         return y_pred[0]
 
     def fit_gradient_descent(self, learning_rate=0.01, iterations=1000):
+        """
+        Fits the linear regression model using the gradient descent method.
+
+        Parameters:
+            learning_rate (float, optional): The learning rate for gradient descent. Defaults to 0.01.
+            iterations (int, optional): The number of iterations for gradient descent. Defaults to 1000.
+        """
         X = np.concatenate((np.ones((self.X_train.shape[0], 1)), self.X_train), axis=1)
         y = self.y_train.to_numpy().reshape(-1, 1)
         theta = np.zeros((X.shape[1], 1))
@@ -28,6 +51,15 @@ class LinearRegression(BaseModel):
         self.model_gradient_descent = theta
 
     def predict_gradient_descent(self, new_entry):
+        """
+        Predicts the target value for a new data entry using the linear regression model trained with gradient descent.
+
+        Parameters:
+            new_entry (array): The feature vector of the new data entry.
+
+        Returns:
+            float: The predicted target value.
+        """
         if self.model_gradient_descent is None:
             print("Gradient descent model not trained. Call fit_gradient_descent() first.")
             return
@@ -37,10 +69,10 @@ class LinearRegression(BaseModel):
     
     def get_y_pred_normal_eq(self):
         """
-        Calculates the predicted array of labels from the test set.
+        Predicts target values for all test data entries using the linear regression model trained with normal equation.
 
         Returns:
-        y_pred (array): The predicted labels
+            list: Predicted target values for all test data entries.
         """
         y_pred = []
         for i in range(len(self.X_test)):
@@ -51,10 +83,10 @@ class LinearRegression(BaseModel):
     
     def get_y_pred_gradient_descent(self):
         """
-        Calculates the predicted array of labels from the test set.
+        Predicts target values for all test data entries using the linear regression model trained with gradient descent.
 
         Returns:
-        y_pred (array): The predicted labels
+            list: Predicted target values for all test data entries.
         """
         y_pred = []
         for i in range(len(self.X_test)):
@@ -64,13 +96,13 @@ class LinearRegression(BaseModel):
     
     def calculate_rmse(self, gradient_descent):
         """
-        Calculates the RMSE values for different methods of linear regression
+        Calculates the root mean squared error (RMSE) for the linear regression model.
 
-        Parameters:
-        gradient_descent (boolean): If true, will use gradient descent method. Otherwise, normal eq method
+        Args:
+            gradient_descent (bool): Flag indicating whether to use the gradient descent model.
 
         Returns:
-        rmse_value (int): RMSE value
+            float: The RMSE value.
         """
         if (gradient_descent):
             y_pred = self.get_y_pred_gradient_descent()

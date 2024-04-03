@@ -15,7 +15,6 @@ class TestLR(unittest.TestCase):
         self.X, self.y = dl.get_features_labels()
         self.X_train, self.X_test, self.y_train, self.y_test = dl.split_data()
         self.model = LinearRegression(self.sample_data, self.X_train, self.X_test, self.y_train, self.y_test)
-        self.model.train_model()
         self.model.fit_normal_eq()
         self.model.fit_gradient_descent()
 

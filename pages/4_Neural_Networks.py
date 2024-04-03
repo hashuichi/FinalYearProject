@@ -13,7 +13,7 @@ class NeuralNetworksPage:
         neural_net = NeuralNetworks(selected_df, self.X_train, self.X_test, self.y_train, self.y_test, 5)
         feedforward_model = neural_net.train_feedforward()
         recurrent_model = neural_net.train_recurrent()
-        y_pred_feedforward = neural_net.calculate_y_pred_feedforward(feedforward_model)
+        y_pred_feedforward = neural_net.get_y_pred_feedforward(feedforward_model)
         st.subheader('Optimise Hotel Price')
         new_entry = neural_net.get_new_hotel_fields(st)
         new_price_feedforward = neural_net.predict_feedforward(feedforward_model, new_entry)
@@ -22,7 +22,7 @@ class NeuralNetworksPage:
         st.write(f'Best Selling Price Per Night (Recurrent Networks): £{new_price_recurrent:.2f}')
         
         st.subheader('Results')
-        rmse_feedforward = neural_net.get_rmse(y_pred_feedforward)
+        rmse_feedforward = neural_net.calculate_rmse(y_pred_feedforward)
         st.write(f'**RMSE with feedforward networks:** {rmse_feedforward:.2f}')
         rmse_recurrent = neural_net.evaluate_model(recurrent_model)
         st.write(f'**RMSE with recurrent networks:** {rmse_recurrent:.2f}')

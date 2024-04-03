@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.model_selection import learning_curve
 
 class BaseModel:
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):
@@ -17,9 +15,6 @@ class BaseModel:
             'Shared room': 3,
             'Hotel room': 4
         }
-
-    def train_model(self):
-        raise NotImplementedError("train_model method must be implemented in the subclass.")
     
     def get_new_hotel_fields(self, st):
         """

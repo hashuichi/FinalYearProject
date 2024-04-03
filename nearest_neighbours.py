@@ -7,7 +7,25 @@ from scipy.spatial import distance
 import streamlit as st
 
 class NearestNeighbours(BaseModel):
-    def _find_nearest_neighbors(self, new_entry, n_neighbours):
+    """
+    A class for implementing a K-Nearest Neighbours Regression model using Euclidean Distance.
+
+    This class extends the BaseModel class and implements a k-nearest neighbours regression model for 
+    predicting target values based on the features of the nearest neighbours.
+    """
+
+    def _find_nearest_neighbours(self, new_entry, n_neighbours):
+        """
+        Finds the nearest neighbours of a new data entry.
+
+        Parameters:
+            new_entry (array): The feature vector of the new data entry.
+            n_neighbours (int): The number of nearest neighbours to find.
+
+        Returns:
+            pd.Series: The prices of the nearest neighbours.
+        """
+
         distances = distance.cdist([new_entry], self.X_train, 'euclidean')[0]
         nearest_indices = np.argpartition(distances, n_neighbours)[:n_neighbours]
         nearest_y = self.y_train.iloc[nearest_indices]
@@ -15,25 +33,29 @@ class NearestNeighbours(BaseModel):
 
     def predict_new_entry(self, new_entry, n_neighbours=5):
         """
-        Train a KNN model on the given features and labels.
+        Predicts the target value for a new data entry using its nearest neighbors.
 
         Parameters:
-        n_neighbours (int): Number of neighbours (default: 5)
+            new_entry (array): The feature vector of the new data entry.
+            n_neighbours (int, optional): The number of nearest neighbors to consider. Defaults to 5.
 
         Returns:
-        knn_model (KNeighborsRegressor): The trained KNN regression model.
+            float: The predicted target value.
         """
         self.n_neighbours = n_neighbours
-        nearest_y = self._find_nearest_neighbors(new_entry, n_neighbours)
+        nearest_y = self._find_nearest_neighbours(new_entry, n_neighbours)
         predicted_price = np.mean(nearest_y)
         return predicted_price
 
     def get_y_pred(self, n_neighbours=5):
         """
-        Calculates the predicted array of labels from the test set.
+        Predicts target values for all test data entries using the k-nearest neighbours model.
+
+        Parameters:
+            n_neighbours (int, optional): The number of nearest neighbours to consider. Defaults to 5.
 
         Returns:
-        y_pred (array): The predicted labels
+            list: Predicted target values for all test data entries.
         """
         y_pred = []
         for i in range(len(self.X_test)):
@@ -45,13 +67,16 @@ class NearestNeighbours(BaseModel):
     @st.cache_resource()
     def calculate_rmse(_self, _n_values):
         """
-        Calculates the RMSE values for different numbers of neighbours.
+        Calculates the root mean squared error (RMSE) for different numbers of nearest neighbours.
+        
+        The results are cached using Streamlit's caching mechanism to improve performance on subsequent runs.
+        Thus, the parameters start with an underscore to indicate that it should be excluded from Streamlit hashing.
 
         Parameters:
-        n_values (array): Array of n_neighbours values to try
+            _n_values (array): Array of numbers of nearest neighbors to evaluate.
 
         Returns:
-        rmse_values (dict): Dictionary mapping n_neighbours to RMSE
+            dict: A dictionary containing RMSE values for different numbers of nearest neighbors.
         """
         rmse_values = {}
         for n in _n_values:
@@ -64,11 +89,13 @@ class NearestNeighbours(BaseModel):
     @st.cache_resource()
     def find_best_k(_self):
         """
-        Find the best k for a KNN model using cross validation from the test features and labels.
+        Finds the optimal number of nearest neighbors using grid search and cross-validation.
+
+        The results cached using Streamlit's caching mechanism to improve performance on subsequent runs.
+        Thus, the parameters start with an underscore to indicate that it should be excluded from Streamlit hashing.
 
         Returns:
-        best_k (int): The best k to use for the given dataset.
-        best_rmse (int): The rmse of the dataset using the best k.
+            tuple: A tuple containing the optimal number of nearest neighbors and its corresponding RMSE.
         """
         param_grid = {'n_neighbors': list(range(1, min(17, len(_self.y_test))))}
         grid_search = GridSearchCV(KNeighborsRegressor(), param_grid, cv=min(5, len(_self.y_test)), scoring='neg_mean_squared_error')
