@@ -7,11 +7,10 @@ class DecisionTree(BaseModel):
         super().__init__(selected_df, X_train, X_test, y_train, y_test)
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
-        self.tree = None
 
     def fit(self, X_train, y_train):
-        self.tree = self._grow_tree(X_train, y_train)
-        return self.tree
+        self.model = self._grow_tree(X_train, y_train)
+        return self.model
 
     def _grow_tree(self, X, y, depth=0):
         num_samples, num_features = X.shape
@@ -57,7 +56,7 @@ class DecisionTree(BaseModel):
         return p_left * gini_left + p_right * gini_right
 
     def calculate_y_pred(self, X):
-        return np.array([self._predict_entry(x, self.tree) for x in X])
+        return np.array([self._predict_entry(x, self.model) for x in X])
 
     def _predict_entry(self, x, tree):
         if isinstance(tree, np.float64):
@@ -69,7 +68,7 @@ class DecisionTree(BaseModel):
             return self._predict_entry(x, right_subtree)
 
     def predict_price(self, x):
-        return self._predict_entry(x, self.tree)
+        return self._predict_entry(x, self.model)
     
     def calculate_rmse_value(self, y_test, y_pred):
         return np.sqrt(mean_squared_error(y_test, y_pred))

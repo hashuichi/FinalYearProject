@@ -1,5 +1,4 @@
 import streamlit as st
-from Data import DataPage
 from data_loader import DataLoader
 from neural_networks import NeuralNetworks
 

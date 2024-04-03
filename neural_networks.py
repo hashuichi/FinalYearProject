@@ -1,6 +1,6 @@
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Dense, LSTM
+from keras.layers import Dense
 from base_model import BaseModel
 import streamlit as st
 

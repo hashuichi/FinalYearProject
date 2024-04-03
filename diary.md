@@ -120,11 +120,10 @@ __________________________
 ## Week 9 (March 11th)
 - Implemented Recurrent Neural Networks with keras
 - Implemented methods to calculate y_pred and rmse for Recurrent networks
-- Renamed methods and varaibles to differentiate between feedforward and recurrent
-
+- Renamed methods and variables to differentiate between feedforward and recurrent
 
 ## Week 10 (March 18th)
-- Cached algorithm results uisng streamlit to speed up loading times when adjusting parameters for prediction and visualisation
+- Cached algorithm results using streamlit to speed up loading times when adjusting parameters for prediction and visualisation
 - Completed the following sections of the report:
     - Introduction
     - Machine Learning
@@ -135,4 +134,3 @@ __________________________
 - Complete final adjustments and refactoring to code
 - Finalise the report
 - Prepare the poster
-- Prepare for the demo

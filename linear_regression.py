@@ -1,20 +1,8 @@
-from sklearn import linear_model
 import numpy as np
 from sklearn.metrics import mean_squared_error
 from base_model import BaseModel
 
 class LinearRegression(BaseModel):
-    def train_model(self):
-        """
-        Train a Linear Regression model on the given features and labels.
-
-        Returns:
-        model (LinearRegression): The trained linear regression model.
-        """
-        self.model = linear_model.LinearRegression()
-        self.model.fit(self.X_train, self.y_train)
-        return self.model
-    
     def fit_normal_eq(self):
         X = np.concatenate((np.ones((self.X_train.shape[0], 1)), self.X_train), axis=1)
         y = self.y_train.to_numpy().reshape(-1, 1)
