@@ -5,7 +5,18 @@ from data_loader import DataLoader
 from nearest_neighbours import NearestNeighbours
 
 class NearestNeighboursPage:
+    """
+    A class that encapsulates the functionality for displaying a page dedicated to the 
+    Nearest Neighbours algorithm using Streamlit. It allows users to upload data, 
+    perform predictions on new data points, and visualise the algorithm's performance.
+    """
+    
     def run(self):
+        """
+        Main execution function for the Nearest Neighbours page. It handles data loading, 
+        training of the Nearest Neighbours model, prediction of new entries, and 
+        visualisation of the model's performance.
+        """
         st.title("Nearest Neighbours")
         dl = DataLoader()
         selected_df = DataPage().get_data_selection()
@@ -25,7 +36,8 @@ class NearestNeighboursPage:
             rmse_values = knn.calculate_rmse(n_values)
             self.display_rmse_chart(rmse_values)
             best_k, best_rmse = knn.find_best_k()
-            self.display_best_k_and_rmse(best_k, best_rmse)
+            st.write(f'Best k: {best_k}')
+            st.write(f'Best RMSE: {best_rmse:.2f}')
 
         st.subheader('Performance Graphs')
         if st.button("Generate Performance Graphs (~1 Minute)"):
@@ -34,7 +46,11 @@ class NearestNeighboursPage:
 
     def display_rmse_chart(self, rmse_values):
         """
-        Displays num_neighboours vs rmse_values chart
+        Displays a line chart of the Root Mean Square Error (RMSE) values for different 
+        numbers of neighbours in the Nearest Neighbours algorithm.
+
+        Parameters:
+            rmse_values (dict): A dictionary where keys are the number of neighbours and values are the corresponding RMSE values.
         """
         n_values = list(rmse_values.keys())
         rmse_scores = list(rmse_values.values())
@@ -45,14 +61,6 @@ class NearestNeighboursPage:
             }
         )
         st.line_chart(rmse_data, x="Number of Neighbours", y="RMSE Value")
-
-    def display_best_k_and_rmse(self, best_k, best_rmse):
-        """
-        Displays the best k and the corresponding RMSE value
-        """
-        st.write(f'Best k: {best_k}')
-        st.write(f'Best RMSE: {best_rmse:.2f}')
-
 
 if __name__ == '__main__':
     app = NearestNeighboursPage()

@@ -5,7 +5,18 @@ from data_loader import DataLoader
 from linear_regression import LinearRegression
 
 class LinearRegressionPage:
+    """
+    A class that encapsulates the functionality for displaying a page dedicated to 
+    Linear Regression using Streamlit. It allows users to upload data, perform 
+    linear regression, predict prices for new hotel entries, visualise actual vs 
+    predicted prices, and view performance metrics.
+    """
     def run(self):
+        """
+        Main execution function for the Linear Regression page. It handles data loading, 
+        training of the Linear Regression model, prediction of new entries, visualisation 
+        of actual vs predicted prices, and display of performance metrics.
+        """
         st.title("Linear Regression")
         dl = DataLoader()
         selected_df = DataPage().get_data_selection()
@@ -46,6 +57,15 @@ class LinearRegressionPage:
         lr.generate_plots(st)
   
     def plot_actual_vs_predicted_prices(self, lr):
+        """
+        Plots actual vs predicted prices using both normal equation and gradient descent methods.
+
+        Parameters:
+            lr (LinearRegression): The Linear Regression model object.
+
+        Returns:
+            plt (matplotlib.pyplot): The matplotlib plot object.
+        """
         # Predict prices for X_test using normal equation method
         y_pred_normal_eq = lr.get_y_pred_normal_eq()
 

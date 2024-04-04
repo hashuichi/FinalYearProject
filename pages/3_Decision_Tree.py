@@ -1,11 +1,20 @@
 import streamlit as st
-import numpy as np
 from Data import DataPage
 from data_loader import DataLoader
 from decision_tree import DecisionTree
 
 class DecisionTreePage:
+    """
+    A class that encapsulates the functionality for displaying a page dedicated to 
+    Decision Tree Regression using Streamlit. It allows users to upload data, train 
+    a decision tree model, predict prices for new hotel entries, and view performance metrics.
+    """
     def run(self):
+        """
+        Main execution function for the Decision Tree page. It handles data loading, 
+        training of the Decision Tree model, prediction of new entries, and 
+        visualisation of the model's performance.
+        """
         st.title("Decision Tree")
         dl = DataLoader()
         selected_df = DataPage().get_data_selection()

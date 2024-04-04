@@ -3,7 +3,19 @@ from data_loader import DataLoader
 from neural_networks import NeuralNetworks
 
 class NeuralNetworksPage:
+    """
+    A class that encapsulates the functionality for displaying a page dedicated to 
+    Neural Networks using Streamlit. It allows users to load data, train feedforward 
+    and recurrent neural network models, predict prices for new hotel entries using 
+    both models, display performance metrics, and visualise performance graphs.
+    """
     def run(self):
+        """
+        Main execution function for the Neural Networks page. It handles data loading, 
+        training of feedforward and recurrent neural network models, prediction of prices 
+        for new hotel entries using both models, display of performance metrics, and 
+        visualisation of performance graphs.
+        """
         st.title("Neural Networks")
         dl = DataLoader()
         selected_df = "Benchmark Dataset"

@@ -1,7 +1,26 @@
 import matplotlib.pyplot as plt
 
 class BaseModel:
+    """
+    A base class for building and evaluating predictive models forS pricing.
+
+    This class provides a structured framework for initialising models with training and testing data,
+    transforming input data for predictions, and generating visualisations for model evaluation. It
+    supports customisation for different types of accommodations or hotels by adapting to various input
+    features and configurations.
+    """
+
     def __init__(self, selected_df, X_train, X_test, y_train, y_test):
+        """
+        Initialises the BaseModel with training and testing data, along with dataset specifics.
+
+        Parameters:
+            selected_df (string): The dataset selected for the model.
+            X_train (pd.DataFrame): Feature matrix of the training data.
+            X_test (pd.DataFrame): Feature matrix of the test data.
+            y_train (pd.Series): Target values of the training data.
+            y_test (pd.Series): Target values of the test data.
+        """
         self.selected_df = selected_df
         self.X_train = X_train
         self.X_test = X_test
@@ -18,7 +37,16 @@ class BaseModel:
     
     def get_new_hotel_fields(self, st):
         """
-        Creates inputs for hotel data and returns the values
+        Dynamically generates input fields in the Streamlit UI for new hotel entries.
+
+        Depending on the dataset selected, this method presents different input fields in the UI for
+        capturing the details of a new hotel entry, facilitating prediction of its price.
+
+        Parameters:
+            st (Streamlit): The Streamlit module for generating UI components.
+
+        Returns:
+            list: A list of input values collected from the user through the UI.
         """
         if self.selected_df == "Benchmark Dataset":
             col1, col2, col3, col4 = st.columns(4)
@@ -34,13 +62,20 @@ class BaseModel:
             distance = col3.number_input('Distance', 100, 5000, 100)
             return [star_rating, distance]
         
-    def generate_plots(self, st, optional_y_pred=None):
-        '''
-        Displays the different plots to visualise the performance of the model.
-        '''
+    def generate_plots(self, st, y_pred=None):
+        """
+        Generates and displays plots for model evaluation in the Streamlit UI.
+
+        This method creates plots for comparing predicted and actual prices, and for visualising
+        the distribution and residuals of the predictions.
+
+        Parameters:
+            st (Streamlit): The Streamlit module for displaying plots in the UI.
+            y_pred (list, optional): A list of predicted values. If not provided, uses `self.y_pred`.
+        """
         col1, col2 = st.columns(2)
-        if optional_y_pred is not None:
-            self.y_pred = optional_y_pred
+        if y_pred is not None:
+            self.y_pred = y_pred
 
         col2.pyplot(self.plot_predicted_actual())
         col1.pyplot(self.plot_residuals_distribution())
@@ -48,10 +83,14 @@ class BaseModel:
         
     def plot_predicted_actual(self):
         """
-        Plots the scatter plot of predicted vs actual prices
+        Creates a scatter plot comparing the actual prices with the predicted prices.
+
+        This visualisation helps in assessing the accuracy of the model by showing how closely
+        the predicted prices align with the actual prices. A closer alignment indicates a higher
+        accuracy of the model.
 
         Returns:
-        fig (Figure): The figure containing the plot
+            matplotlib.figure.Figure: A matplotlib figure object containing the scatter plot.
         """
         fig, ax = plt.subplots()
         ax.scatter(self.y_test, self.y_pred, c='blue', label='True Prices')
@@ -62,10 +101,15 @@ class BaseModel:
     
     def plot_residual_plot(self):
         """
-        Plots the residual of the actual prices - predicted prices
+        Generates a residual plot to visualise the difference between actual and predicted prices.
+
+        The residuals (actual - predicted prices) are plotted against a relevant feature to
+        identify patterns or biases in the predictions. The color coding can represent different
+        categories such as room type or star rating, providing insights into how these factors
+        might influence prediction errors.
 
         Returns:
-        fig (Figure): The figure containing the plot
+            matplotlib.figure.Figure: A matplotlib figure object containing the residual plot.
         """
         if self.selected_df == "Benchmark Dataset":
             X_line = self.X_test['accommodates']
@@ -88,10 +132,14 @@ class BaseModel:
     
     def plot_residuals_distribution(self):
         """
-        Plots a histogram of the distribution of residuals
+        Creates a histogram to show the distribution of the residuals (actual - predicted prices).
+
+        This plot helps in understanding the variance in the prediction errors, indicating whether
+        the model tends to underpredict or overpredict prices. Ideally, the distribution should be
+        centered around zero, indicating accurate predictions without systematic bias.
 
         Returns:
-        fig (Figure): The figure containing the plot
+            matplotlib.figure.Figure: A matplotlib figure object containing the histogram of residuals.
         """
         fig, ax = plt.subplots()
         ax.hist((self.y_test - self.y_pred), bins=30, color='blue', edgecolor='black')
